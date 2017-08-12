@@ -4,28 +4,41 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float LowerBorder;
+    public float MovementSpeed;
+    public Weapon MyWeapon;
 
+    private bool facingRight = true;
     private Rigidbody2D myRigidbody2D;
     
-
-	void Start ()
+	private void Awake ()
 	{
 	    myRigidbody2D = GetComponent<Rigidbody2D>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
+	private void Update ()
+    {
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
 
-        myRigidbody2D.AddForce(new Vector2(moveHorizontal, moveVertical) * 5);
-
-	    if (transform.position.y < LowerBorder)
-	    {      
-	        Camera.main.transform.position = new Vector3(transform.position.x, 5.5f, -10);
-	    }
-
-        myRigidbody2D.velocity = new Vector2(moveHorizontal * 4, moveVertical * 4);
+        HandleInput(horizontal, vertical);
+        Flip(horizontal);
 	}
+
+    private void HandleInput(float horizontal, float vertical)
+    {
+        myRigidbody2D.velocity = new Vector2(horizontal * MovementSpeed, vertical * MovementSpeed);
+
+        if (Input.GetButton("Fire1"))
+            MyWeapon.Shoot();
+    }
+
+    private void Flip(float horizontal)
+    {
+        if (horizontal > 0 && !facingRight || horizontal < 0 && facingRight)
+        {
+            facingRight = !facingRight;
+            transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
+        }
+    }
 }
