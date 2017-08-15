@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Character
 {
-    public float MovementSpeed;
     public Weapon MyWeapon;
-
-    private bool facingRight = true;
+   
     private Rigidbody2D myRigidbody2D;
     
 	private void Awake ()
@@ -35,10 +33,9 @@ public class Player : MonoBehaviour
 
     private void Flip(float horizontal)
     {
-        if (horizontal > 0 && !facingRight || horizontal < 0 && facingRight)
+        if (horizontal > 0 && !FacingRight || horizontal < 0 && FacingRight)
         {
-            facingRight = !facingRight;
-            transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
+            ChangeDirection();
         }
     }
 }

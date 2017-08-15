@@ -29,7 +29,9 @@ public class Weapon : MonoBehaviour
         diff.Normalize();
 
         float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-        Muzzle.transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
+        
+        if (rot_z > 0)
+            Muzzle.transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
     }
 
     public void Shoot()
