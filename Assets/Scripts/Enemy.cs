@@ -1,5 +1,4 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -52,9 +51,8 @@ public class Enemy : Character
 
         percentBetweenwaypoints += Time.deltaTime * MovementSpeed / distanceBetweeenWaypoints;
         percentBetweenwaypoints = Mathf.Clamp01(percentBetweenwaypoints);
-        float easedPercent = Ease(percentBetweenwaypoints);
 
-        Vector2 newPos = Vector2.Lerp(Waypoints[fromWaypointIndex], Waypoints[toWaypointIndex], easedPercent);
+        Vector2 newPos = Vector2.Lerp(Waypoints[fromWaypointIndex], Waypoints[toWaypointIndex], Ease(percentBetweenwaypoints));
 
         if (percentBetweenwaypoints >= 1)
         {
