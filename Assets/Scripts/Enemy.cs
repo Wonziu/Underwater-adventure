@@ -14,9 +14,9 @@ public class Enemy : Character
     private int fromWaypointIndex;
     private float nextMoveTime;
 
-    private void Start()
+    private void Awake()
     {
-
+        base.Awake();
     }
 
     private void Update()
@@ -28,7 +28,7 @@ public class Enemy : Character
 
     private void Flip(Vector2 velocity)
     {
-        if (velocity.x > 0 && FacingRight || velocity.x < 0 && !FacingRight)
+        if (velocity.x > 0 && FacingLeft || velocity.x < 0 && !FacingLeft)
         {
             ChangeDirection();
         }
@@ -69,5 +69,26 @@ public class Enemy : Character
         }
 
         return newPos - new Vector2(transform.position.x, transform.position.y);
+    }
+
+    private void OnTriggerEnter2D(Collider2D coll)
+    {
+        if (coll.GetComponent<Player>())
+            Destroy(coll.gameObject);
+    }
+
+    public void OnDrawGizmosSelected()
+    {
+        Vector3 last = Vector3.zero;
+        foreach (var waypoint in Waypoints)
+        {
+            if (last != Vector3.zero)
+            {
+                Gizmos.DrawLine(last,waypoint);
+            }
+            last = waypoint;
+            
+            Gizmos.DrawSphere(waypoint,0.1f);
+        }
     }
 }

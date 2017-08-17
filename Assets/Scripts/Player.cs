@@ -11,6 +11,7 @@ public class Player : Character
 	private void Awake ()
 	{
 	    myRigidbody2D = GetComponent<Rigidbody2D>();
+        base.Awake();
 	}
 	
 	// Update is called once per frame
@@ -25,7 +26,7 @@ public class Player : Character
 
     private void HandleInput(float horizontal, float vertical)
     {
-        myRigidbody2D.velocity = new Vector2(horizontal * MovementSpeed, vertical * MovementSpeed);
+        myRigidbody2D.velocity += new Vector2(horizontal * MovementSpeed, vertical * MovementSpeed) / 10;
 
         if (Input.GetButton("Fire1"))
             MyWeapon.Shoot();
@@ -33,7 +34,7 @@ public class Player : Character
 
     private void Flip(float horizontal)
     {
-        if (horizontal > 0 && !FacingRight || horizontal < 0 && FacingRight)
+        if (horizontal > 0 && !FacingLeft || horizontal < 0 && FacingLeft)
         {
             ChangeDirection();
         }

@@ -31,7 +31,7 @@ public class Projectile : MonoBehaviour
     {
         if (hit.collider.tag == "Enemy")
         {
-            // Deal damage
+            Destroy(hit.transform.gameObject);
         }
         
         Destroy(gameObject);
