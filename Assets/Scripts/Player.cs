@@ -26,7 +26,7 @@ public class Player : Character
 
     private void HandleInput(float horizontal, float vertical)
     {
-        myRigidbody2D.velocity += new Vector2(horizontal * MovementSpeed, vertical * MovementSpeed) / 10;
+        myRigidbody2D.velocity = new Vector2(horizontal * MovementSpeed, vertical * MovementSpeed) ;
 
         if (Input.GetButton("Fire1"))
             MyWeapon.Shoot();

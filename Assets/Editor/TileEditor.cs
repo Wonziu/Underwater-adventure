@@ -6,24 +6,26 @@ using UnityEngine;
 [CustomEditor(typeof(SpriteRenderer))]
 public class TileEditor : Editor
 {
-    void OnSceneGUI()
+    public void OnSceneGUI()
     {
         Event e = Event.current;
 
-        var sr = (SpriteRenderer)target;
+        SpriteRenderer mySpriteRenderer = (SpriteRenderer)target;
 
-        var parent = sr.gameObject.transform.parent;
+        Transform parent = mySpriteRenderer.gameObject.transform.parent;
         if (parent == null) return;
 
-        var snapper = parent.GetComponent<EditorGame>();
-        if (snapper == null) return;
+        TilesController myTilesController = parent.GetComponent<TilesController>();
+        if (myTilesController == null) return;
 
         if (e.type == EventType.keyDown)
         {
-            if (e.keyCode == KeyCode.O)
-                snapper.ChangeSprite(-1, sr);
-            if (e.keyCode == KeyCode.P)
-                snapper.ChangeSprite(1, sr);
+            if (e.keyCode == KeyCode.Q)
+                myTilesController.ChangeSprite(-1, mySpriteRenderer);
+            else if (e.keyCode == KeyCode.E)
+                myTilesController.ChangeSprite(1, mySpriteRenderer);
+            else if (e.keyCode == KeyCode.W)
+                myTilesController.RotateTile(mySpriteRenderer.transform);
         }
     }
 }

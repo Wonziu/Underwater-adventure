@@ -8,9 +8,9 @@ public class EnemyPathEditor : Editor
 {
     public void OnSceneGUI()
     {
-        var enemy = (Enemy)target;
+        Enemy enemy = (Enemy)target;
 
-        var path = enemy.Waypoints;
+        Vector2[] path = enemy.Waypoints;
 
         EditorGUI.BeginChangeCheck();
 
