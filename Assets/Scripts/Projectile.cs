@@ -11,6 +11,8 @@ public class Projectile : MonoBehaviour
     public void SetSpeed(float newSpeed)
     {
         speed = newSpeed;
+
+        
     }
 
     private void Update()

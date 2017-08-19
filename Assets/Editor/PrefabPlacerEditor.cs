@@ -15,14 +15,17 @@ public class PrefabPlacerEditor : Editor
         mousePosition = SceneView.currentDrawingSceneView.camera.ScreenToWorldPoint(mousePosition);
         mousePosition.z = 0;
 
-
         TilesController myTilesController = (TilesController) target;
 
 
         if (e.type == EventType.keyDown)
         {
-            if (e.keyCode == KeyCode.S)
-                myTilesController.PlacePrefab(mousePosition, 0);      
+            if (e.keyCode == KeyCode.Keypad1)
+                myTilesController.PlaceTilePrefab(mousePosition, 0);  
+            else if (e.keyCode == KeyCode.Keypad2)
+                myTilesController.PlaceTilePrefab(mousePosition, myTilesController.TileSprites.Count - 1);   
+            else if (e.keyCode == KeyCode.Keypad4)
+                myTilesController.PlacePlantPrefab(mousePosition, 0); 
         }
     }
 }

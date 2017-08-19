@@ -11,5 +11,6 @@ public class ChildrenCounter : MonoBehaviour
         {
             transform.GetChild(i).name = i.ToString();
         }
+        DestroyImmediate(this);
 	}
 }

@@ -4,12 +4,16 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class TilesController : MonoBehaviour
 {
-    public bool RoundPosEnabled;
     [HideInInspector]
     public int Index;
 
+    public bool RoundPosEnabled;
+
     public List<Sprite> TileSprites;
+    public List<Sprite> PlantSprites;
+
     public GameObject TilePrefab;
+    public GameObject PlantPrefab;
 
     void Update()
     {
@@ -29,6 +33,8 @@ public class TilesController : MonoBehaviour
 
     public void ChangeSprite(int i, SpriteRenderer sr)
     {
+        var index = TileSprites.FindIndex(s => s == sr.sprite);
+        Index = index;
         Index = Mathf.Clamp(i + Index, 0, TileSprites.Count);
         sr.sprite = TileSprites[Index];
     }
@@ -38,10 +44,17 @@ public class TilesController : MonoBehaviour
         t.position = new Vector3(Mathf.RoundToInt(t.position.x), Mathf.RoundToInt(t.position.y), Mathf.RoundToInt(t.position.z));
     }
 
-    public void PlacePrefab(Vector3 pos, int i)
+    public void PlaceTilePrefab(Vector3 pos, int i)
     {
         GameObject g = Instantiate(TilePrefab, pos, Quaternion.identity);
         g.GetComponent<SpriteRenderer>().sprite = TileSprites[i];
+        g.transform.parent = transform;
+    }
+
+    public void PlacePlantPrefab(Vector3 pos, int i)
+    {
+        GameObject g = Instantiate(PlantPrefab, pos, Quaternion.identity);
+        g.GetComponent<SpriteRenderer>().sprite = PlantSprites[i];
         g.transform.parent = transform;
     }
 

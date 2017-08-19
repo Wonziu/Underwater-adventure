@@ -20,11 +20,11 @@ public class TileEditor : Editor
 
         if (e.type == EventType.keyDown)
         {
-            if (e.keyCode == KeyCode.Q)
+            if (e.keyCode == KeyCode.Keypad1)
                 myTilesController.ChangeSprite(-1, mySpriteRenderer);
-            else if (e.keyCode == KeyCode.E)
+            else if (e.keyCode == KeyCode.Keypad3)
                 myTilesController.ChangeSprite(1, mySpriteRenderer);
-            else if (e.keyCode == KeyCode.W)
+            else if (e.keyCode == KeyCode.Keypad2)
                 myTilesController.RotateTile(mySpriteRenderer.transform);
         }
     }
