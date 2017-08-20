@@ -26,8 +26,6 @@ public class TilesController : MonoBehaviour
                 var e = transform.GetChild(i);
                 RoundPosition(e);
             }
-
-            //RoundPosEnabled = false;
         }
     }
 

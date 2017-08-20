@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(Enemy)), CanEditMultipleObjects]
+[CustomEditor(typeof(MovingEnemy)), CanEditMultipleObjects]
 public class EnemyPathEditor : Editor
 {
     public void OnSceneGUI()
     {
-        Enemy enemy = (Enemy)target;
+        MovingEnemy movingEnemy = (MovingEnemy)target;
 
-        Vector2[] path = enemy.Waypoints;
+        Vector2[] path = movingEnemy.Waypoints;
 
         EditorGUI.BeginChangeCheck();
 
@@ -21,8 +21,8 @@ public class EnemyPathEditor : Editor
         }
         if (EditorGUI.EndChangeCheck())
         {
-            Undo.RecordObject(enemy, "Path change");
-            enemy.Waypoints = path;
+            Undo.RecordObject(movingEnemy, "Path change");
+            movingEnemy.Waypoints = path;
         }
     }
 }

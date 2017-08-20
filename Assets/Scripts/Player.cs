@@ -20,6 +20,8 @@ public class Player : Character
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
+        MyWeapon.Aim(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+
         HandleInput(horizontal, vertical);
         Flip(horizontal);
 	}

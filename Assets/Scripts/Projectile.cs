@@ -11,8 +11,6 @@ public class Projectile : MonoBehaviour
     public void SetSpeed(float newSpeed)
     {
         speed = newSpeed;
-
-        
     }
 
     private void Update()
@@ -31,7 +29,7 @@ public class Projectile : MonoBehaviour
 
     private void OnHit(RaycastHit2D hit)
     {
-        if (hit.collider.tag == "Enemy")
+        if (hit.collider.tag == "Enemy" || hit.collider.tag == "Player")
         {
             Destroy(hit.transform.gameObject);
         }

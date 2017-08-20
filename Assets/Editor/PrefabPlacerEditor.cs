@@ -17,7 +17,6 @@ public class PrefabPlacerEditor : Editor
 
         TilesController myTilesController = (TilesController) target;
 
-
         if (e.type == EventType.keyDown)
         {
             if (e.keyCode == KeyCode.Keypad1)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : Character
+public class MovingEnemy : Character
 {
     public Vector2[] Waypoints;
     public bool Cyclic;
