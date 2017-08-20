@@ -9,11 +9,6 @@ public class ShootingEnemy : MonoBehaviour
     public Player Target;
     public Weapon MyWeapon;
 
-    private void Start()
-    {
-
-    }
-
     private void Update()
     {
         if (Target != null)
@@ -22,7 +17,6 @@ public class ShootingEnemy : MonoBehaviour
 
             if (hit.transform == Target.transform)
             {
-                Debug.Log(hit.transform);
                 MyWeapon.Aim(Target.transform.position);
 
                 MyWeapon.Shoot();

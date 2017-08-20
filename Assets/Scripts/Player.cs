@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class Player : Character
@@ -7,8 +8,10 @@ public class Player : Character
     public Weapon MyWeapon;
    
     private Rigidbody2D myRigidbody2D;
-    
-	private void Awake ()
+    private float horizontal;
+    private float vertical;
+
+    private void Awake ()
 	{
 	    myRigidbody2D = GetComponent<Rigidbody2D>();
         base.Awake();
@@ -17,24 +20,30 @@ public class Player : Character
 	// Update is called once per frame
 	private void Update ()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxis("Vertical");
 
         MyWeapon.Aim(Camera.main.ScreenToWorldPoint(Input.mousePosition));
 
-        HandleInput(horizontal, vertical);
-        Flip(horizontal);
-	}
+        HandleInput();
+        Flip();
+        myRigidbody2D.velocity = new Vector2(horizontal * MovementSpeed, vertical * MovementSpeed);
 
-    private void HandleInput(float horizontal, float vertical)
+    }
+
+    private void FixedUpdate()
     {
-        myRigidbody2D.velocity = new Vector2(horizontal * MovementSpeed, vertical * MovementSpeed) ;
+        // transform.Translate(new Vector2(horizontal * MovementSpeed, vertical * MovementSpeed) * Time.deltaTime);
+        
+    }
 
+    private void HandleInput()
+    { 
         if (Input.GetButton("Fire1"))
             MyWeapon.Shoot();
     }
 
-    private void Flip(float horizontal)
+    private void Flip()
     {
         if (horizontal > 0 && !FacingLeft || horizontal < 0 && FacingLeft)
         {

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MovingEnemy : Character
 {
@@ -13,6 +11,7 @@ public class MovingEnemy : Character
     private float percentBetweenwaypoints;
     private int fromWaypointIndex;
     private float nextMoveTime;
+    private Vector2 velocity;
 
     private void Awake()
     {
@@ -21,14 +20,21 @@ public class MovingEnemy : Character
 
     private void Update()
     {
-        Vector2 velocity = MoveTowardsWaypoint();
-        transform.Translate(velocity);
-        Flip(velocity);
     }
 
-    private void Flip(Vector2 velocity)
+    private void FixedUpdate()
     {
-        if (velocity.x > 0 && FacingLeft || velocity.x < 0 && !FacingLeft)
+        velocity = MoveTowardsWaypoint();
+        if (velocity != Vector2.zero)
+        {
+            myRigidbody2D.MovePosition(velocity);
+            Flip();
+        }
+    }
+
+    private void Flip()
+    {
+        if (velocity.x - transform.position.x > 0 && FacingLeft || velocity.x - transform.position.x < 0 && !FacingLeft)
         {
             ChangeDirection();
         }
@@ -68,13 +74,13 @@ public class MovingEnemy : Character
             nextMoveTime = Time.time + WaitTime;
         }
 
-        return newPos - new Vector2(transform.position.x, transform.position.y);
+        return newPos;
     }
 
     private void OnTriggerEnter2D(Collider2D coll)
     {
         if (coll.GetComponent<Player>())
-            Destroy(coll.gameObject);
+            coll.gameObject.SetActive(false);
     }
 
     public void OnDrawGizmosSelected()
@@ -84,11 +90,11 @@ public class MovingEnemy : Character
         {
             if (last != Vector3.zero)
             {
-                Gizmos.DrawLine(last,waypoint);
+                Gizmos.DrawLine(last, waypoint);
             }
             last = waypoint;
-            
-            Gizmos.DrawSphere(waypoint,0.1f);
+
+            Gizmos.DrawSphere(waypoint, 0.1f);
         }
     }
 }

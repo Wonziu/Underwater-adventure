@@ -7,10 +7,12 @@ public class Character : MonoBehaviour
     public float MovementSpeed;
     public bool FacingLeft = true;
     public Animator MyAnimator;
+    public Rigidbody2D myRigidbody2D;
 
     public void Awake()
     {
         MyAnimator = GetComponent<Animator>();
+        myRigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     public void ChangeDirection()
