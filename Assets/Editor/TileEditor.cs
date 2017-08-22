@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-
+/*
 [CustomEditor(typeof(SpriteRenderer))]
 public class TileEditor : Editor
 {
@@ -28,4 +28,4 @@ public class TileEditor : Editor
                 myTilesController.RotateTile(mySpriteRenderer.transform);
         }
     }
-}
+}*/

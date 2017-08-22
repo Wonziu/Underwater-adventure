@@ -5,7 +5,6 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public float FireRate;
-    public float Damage;
     public float ProjectileSpeed;
     public Transform Muzzle;
 
