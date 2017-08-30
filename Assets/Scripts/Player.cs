@@ -6,7 +6,8 @@ using UnityEngine;
 public class Player : Character
 {
     public Weapon MyWeapon;
-   
+    public List<Key> Keys;
+
     private Rigidbody2D myRigidbody2D;
     private float horizontal;
     private float vertical;
@@ -28,13 +29,11 @@ public class Player : Character
         HandleInput();
         Flip();
         myRigidbody2D.velocity = new Vector2(horizontal * MovementSpeed, vertical * MovementSpeed);
-
     }
 
     private void FixedUpdate()
     {
         // transform.Translate(new Vector2(horizontal * MovementSpeed, vertical * MovementSpeed) * Time.deltaTime);
-        
     }
 
     private void HandleInput()
