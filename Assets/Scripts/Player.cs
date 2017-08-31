@@ -44,8 +44,8 @@ public class Player : Character
 
     private void HandleInput()
     { 
-        //if (Input.GetButton("Fire1"))
-            //MyWeapon.Shoot();
+        if (Input.GetButton("Fire1"))
+            MyWeapon.Shoot();
     }
 
     private void Flip()

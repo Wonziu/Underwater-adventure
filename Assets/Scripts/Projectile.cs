@@ -29,9 +29,14 @@ public class Projectile : MonoBehaviour
 
     private void OnHit(RaycastHit2D hit)
     {
-        if (hit.collider.tag == "Enemy")
-            hit.transform.gameObject.SetActive(false);
-        else if (hit.collider.tag == "Player")
-            hit.transform.GetComponent<Player>().Reset();
+        if (hit.collider.tag == "Enemy"){
+			            hit.transform.gameObject.SetActive(false);
+						
+		}
+
+        else if (hit.collider.tag == "Player"){
+			 hit.transform.GetComponent<Player>().Reset();
+		}
+           Destroy(gameObject);
     }
 }
