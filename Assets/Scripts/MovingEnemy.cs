@@ -79,8 +79,8 @@ public class MovingEnemy : Character
 
     private void OnTriggerEnter2D(Collider2D coll)
     {
-        if (coll.GetComponent<Player>())
-            coll.gameObject.SetActive(false);
+        if (coll.tag == "Player")
+            coll.GetComponent<Player>().Reset();
     }
 
     public void OnDrawGizmosSelected()

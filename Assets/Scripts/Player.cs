@@ -11,12 +11,18 @@ public class Player : Character
     private Rigidbody2D myRigidbody2D;
     private float horizontal;
     private float vertical;
+    private Vector2 startPos;
 
     private void Awake ()
 	{
 	    myRigidbody2D = GetComponent<Rigidbody2D>();
         base.Awake();
 	}
+
+    private void Start()
+    {
+        startPos = transform.position;
+    }
 	
 	// Update is called once per frame
 	private void Update ()
@@ -38,8 +44,8 @@ public class Player : Character
 
     private void HandleInput()
     { 
-        if (Input.GetButton("Fire1"))
-            MyWeapon.Shoot();
+        //if (Input.GetButton("Fire1"))
+            //MyWeapon.Shoot();
     }
 
     private void Flip()
@@ -48,5 +54,10 @@ public class Player : Character
         {
             ChangeDirection();
         }
+    }
+
+    public void Reset()
+    {
+        transform.position = startPos;
     }
 }
