@@ -6,14 +6,16 @@ using UnityEngine;
 public class Player : Character
 {
     public Weapon MyWeapon;
+    public Vector2 CheckPoint;
     public List<Key> Keys;
+    public int CoinsAmount;
+    public int Ammo;
 
     private Rigidbody2D myRigidbody2D;
     private float horizontal;
     private float vertical;
-    private Vector2 startPos;
 
-    private void Awake ()
+    private void Awake()
 	{
 	    myRigidbody2D = GetComponent<Rigidbody2D>();
         base.Awake();
@@ -21,7 +23,7 @@ public class Player : Character
 
     private void Start()
     {
-        startPos = transform.position;
+        CheckPoint = transform.position;
     }
 	
 	// Update is called once per frame
@@ -34,18 +36,21 @@ public class Player : Character
 
         HandleInput();
         Flip();
-        myRigidbody2D.velocity = new Vector2(horizontal * MovementSpeed, vertical * MovementSpeed);
     }
 
     private void FixedUpdate()
     {
+        myRigidbody2D.velocity = new Vector2(horizontal * MovementSpeed, vertical * MovementSpeed);
         // transform.Translate(new Vector2(horizontal * MovementSpeed, vertical * MovementSpeed) * Time.deltaTime);
     }
 
     private void HandleInput()
-    { 
-        if (Input.GetButton("Fire1"))
+    {
+        if (Input.GetButtonDown("Fire1") && Ammo > 0)
+        {
             MyWeapon.Shoot();
+            Ammo--;
+        }
     }
 
     private void Flip()
@@ -56,8 +61,8 @@ public class Player : Character
         }
     }
 
-    public void Reset()
+    public void KillPlayer()
     {
-        transform.position = startPos;
+        transform.position = CheckPoint;
     }
 }

@@ -80,7 +80,7 @@ public class MovingEnemy : Character
     private void OnTriggerEnter2D(Collider2D coll)
     {
         if (coll.tag == "Player")
-            coll.GetComponent<Player>().Reset();
+            coll.GetComponent<Player>().KillPlayer();
     }
 
     public void OnDrawGizmosSelected()

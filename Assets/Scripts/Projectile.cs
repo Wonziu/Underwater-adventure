@@ -13,9 +13,13 @@ public class Projectile : MonoBehaviour
         speed = newSpeed;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         transform.Translate(Vector3.up * Time.deltaTime * speed);
+    }
+
+    private void Update()
+    {
         CheckCollisions(speed * Time.deltaTime);
     }
 
@@ -29,14 +33,11 @@ public class Projectile : MonoBehaviour
 
     private void OnHit(RaycastHit2D hit)
     {
-        if (hit.collider.tag == "Enemy"){
-			            hit.transform.gameObject.SetActive(false);
-						
-		}
+        if (hit.collider.tag == "Enemy")
+            hit.transform.gameObject.SetActive(false);
+        else if (hit.collider.tag == "Player")
+            hit.transform.GetComponent<Player>().KillPlayer();
 
-        else if (hit.collider.tag == "Player"){
-			 hit.transform.GetComponent<Player>().Reset();
-		}
-           Destroy(gameObject);
+        Destroy(gameObject);
     }
 }

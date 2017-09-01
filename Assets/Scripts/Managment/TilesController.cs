@@ -39,7 +39,7 @@ public class TilesController : MonoBehaviour
 
     public void RoundPosition(Transform t)
     {
-        t.position = new Vector3(Mathf.RoundToInt(t.position.x), Mathf.RoundToInt(t.position.y), Mathf.RoundToInt(t.position.z));
+       t.position = new Vector3(Mathf.RoundToInt(t.position.x), Mathf.RoundToInt(t.position.y), Mathf.RoundToInt(t.position.z));
     }
 
     public void PlaceTilePrefab(Vector3 pos, int i)
