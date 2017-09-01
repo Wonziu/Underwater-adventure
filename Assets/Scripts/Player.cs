@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class Player : Character
 {
+    public GameManager MyGameManager;
     public Weapon MyWeapon;
     public Vector2 CheckPoint;
     public List<Key> Keys;
-    public int CoinsAmount;
-    public int Ammo;
+    private int CoinsAmount;
+    public int AmmoAmount;
 
     private Rigidbody2D myRigidbody2D;
     private float horizontal;
@@ -24,10 +25,11 @@ public class Player : Character
     private void Start()
     {
         CheckPoint = transform.position;
+        MyGameManager.SetAmmoAmount(AmmoAmount);
     }
-	
-	// Update is called once per frame
-	private void Update ()
+
+    // Update is called once per frame
+    private void Update ()
     {
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
@@ -46,10 +48,11 @@ public class Player : Character
 
     private void HandleInput()
     {
-        if (Input.GetButtonDown("Fire1") && Ammo > 0)
+        if (Input.GetButtonDown("Fire1") && AmmoAmount > 0)
         {
             MyWeapon.Shoot();
-            Ammo--;
+            AmmoAmount--;
+            MyGameManager.SetAmmoAmount(AmmoAmount);
         }
     }
 
@@ -64,5 +67,18 @@ public class Player : Character
     public void KillPlayer()
     {
         transform.position = CheckPoint;
+    }
+
+    public void CoinPickUp()
+    {
+        CoinsAmount++;
+        MyGameManager.SetCoinsAmount(CoinsAmount);
+    }
+
+    public void SetCheckPoint(Vector2 pos)
+    {
+        CheckPoint = pos;
+        AmmoAmount += 2;
+        MyGameManager.SetAmmoAmount(AmmoAmount);
     }
 }

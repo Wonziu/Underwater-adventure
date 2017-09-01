@@ -10,7 +10,6 @@ public class Door : MonoBehaviour
     {
         if (coll.collider.tag == "Player")
         {
-            Debug.Log("Dds");
             foreach (var key in coll.collider.GetComponent<Player>().Keys)
                 if (key == Key)
                 {

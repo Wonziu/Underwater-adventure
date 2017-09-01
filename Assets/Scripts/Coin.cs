@@ -8,8 +8,8 @@ public class Coin : MonoBehaviour
     {
         if (coll.tag == "Player")
         {
-            coll.GetComponent<Player>().CoinsAmount++;
             gameObject.SetActive(false);
+            coll.GetComponent<Player>().CoinPickUp();
         }   
     }
 }

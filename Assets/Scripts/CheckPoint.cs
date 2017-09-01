@@ -8,8 +8,8 @@ public class CheckPoint : MonoBehaviour
     {
         if (coll.tag == "Player")
         {
-            coll.GetComponent<Player>().CheckPoint = transform.position;
-            coll.GetComponent<Player>().Ammo += 2;
+            coll.GetComponent<Player>().SetCheckPoint(transform.position);
+            GetComponent<Animator>().SetBool("IsSet", true);
             GetComponent<Collider2D>().enabled = false;
         }
     }
