@@ -9,18 +9,19 @@ public class Player : Character
     public Weapon MyWeapon;
     public Vector2 CheckPoint;
     public List<Key> Keys;
-    private int CoinsAmount;
+    public List<SecretItem> SecretItems;
     public int AmmoAmount;
 
+    private int CoinsAmount;
     private Rigidbody2D myRigidbody2D;
     private float horizontal;
     private float vertical;
 
     private void Awake()
-	{
-	    myRigidbody2D = GetComponent<Rigidbody2D>();
+    {
+        myRigidbody2D = GetComponent<Rigidbody2D>();
         base.Awake();
-	}
+    }
 
     private void Start()
     {
@@ -29,7 +30,7 @@ public class Player : Character
     }
 
     // Update is called once per frame
-    private void Update ()
+    private void Update()
     {
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
@@ -48,7 +49,7 @@ public class Player : Character
 
     private void HandleInput()
     {
-        if (Input.GetButtonDown("Fire1") && AmmoAmount > 0)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && AmmoAmount > 0)
         {
             MyWeapon.Shoot();
             AmmoAmount--;
@@ -59,17 +60,36 @@ public class Player : Character
     private void Flip()
     {
         if (horizontal > 0 && !FacingLeft || horizontal < 0 && FacingLeft)
-        {
             ChangeDirection();
-        }
     }
 
     public void KillPlayer()
     {
-        transform.position = CheckPoint;
+        MyGameManager.StartCoroutine(MyGameManager.DeathAnimation(this, ResetPlayer));
+        gameObject.SetActive(false);
     }
 
-    public void CoinPickUp()
+    public void ResetPlayer()
+    {
+        gameObject.SetActive(true);
+        RemoveKeys();
+        transform.position = CheckPoint;     
+    }
+
+    private void RemoveKeys()
+    {
+        for (int i = 0; i < Keys.Count; i++)
+        {
+            var key = Keys[i];
+            if (key.PlayerCheckpoint == CheckPoint)
+            {
+                key.ResetKey();
+                Keys.Remove(key);
+            }
+        }
+    }
+
+    public void PickUpCoin()
     {
         CoinsAmount++;
         MyGameManager.SetCoinsAmount(CoinsAmount);
@@ -78,7 +98,7 @@ public class Player : Character
     public void SetCheckPoint(Vector2 pos)
     {
         CheckPoint = pos;
-        AmmoAmount += 2;
+        AmmoAmount += 1;
         MyGameManager.SetAmmoAmount(AmmoAmount);
     }
 }
