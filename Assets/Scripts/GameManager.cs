@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     private int MaxCoinsAmount;
-    private int MaxSecretItemsAmount;
 
+    public Player MyPlayer;
     public GameObject UIObject;
     public Transform CoinsParent;
     public Transform SecretItemsParent;
@@ -21,8 +22,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         SetMaxCoinsAmount();
-        SetMaxSecretItems();
-        StartCoroutine(FadeInAnimation());
+        StartCoroutine(FadeOutAnimation());
     }
 
     // Update is called once per frame
@@ -34,11 +34,6 @@ public class GameManager : MonoBehaviour
     public void SetCoinsAmount(int coins)
     {
         CoinsText.text = coins.ToString();
-    }
-
-    private void SetMaxSecretItems()
-    {
-        MaxSecretItemsAmount = SecretItemsParent.childCount;
     }
 
     private void SetMaxCoinsAmount()
@@ -56,10 +51,38 @@ public class GameManager : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D coll)
     {
         if (coll.tag == "Player")
-            StartCoroutine(FadeOutAnimation());
+        {
+            SaveResults();
+            StartCoroutine(FadeInAnimation( () => SceneManager.LoadScene("LevelSelectionScene")));
+        }
     }
 
-    public IEnumerator FadeOutAnimation()
+    private void SaveResults()
+    {
+        SaveData save = FileManagment.ReadFile<SaveData>("save.dat");
+
+        int index = SceneManager.GetActiveScene().buildIndex;
+
+        if (index > save.Levels.Count - 1)
+        {
+            save.Levels.Add(new Level
+            {
+                Coins = MyPlayer.CoinsAmount,
+                SecretItems = MyPlayer.SecretItems.Count
+            });
+        }
+        else
+        {     
+            if (save.Levels[index].Coins < MyPlayer.CoinsAmount)
+                save.Levels[SceneManager.GetActiveScene().buildIndex].Coins = MyPlayer.CoinsAmount;
+            if (save.Levels[index].SecretItems < MyPlayer.CoinsAmount)
+                save.Levels[SceneManager.GetActiveScene().buildIndex].SecretItems = MyPlayer.SecretItems.Count;
+        }
+
+        FileManagment.WriteFile("save.dat", save);        
+    }
+
+    public IEnumerator FadeInAnimation(UnityAction afterFadeOut = null)
     {
         UIObject.SetActive(false);
         yield return new WaitForSeconds(0.3f);
@@ -73,9 +96,12 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
         Overlay.color = Color.black;
+
+        if (afterFadeOut != null)
+            afterFadeOut.Invoke();
     }
 
-    public IEnumerator FadeInAnimation()
+    public IEnumerator FadeOutAnimation()
     {
         Overlay.color = Color.black;
         float progress = 0.0f;
@@ -89,6 +115,8 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.3f);
         UIObject.SetActive(true);
+
+       
     }
 
     public IEnumerator DeathAnimation(Player myPlayer, UnityAction afterFadeIn = null, UnityAction afterFadeOut = null)

@@ -23,7 +23,7 @@ public class TilesController : MonoBehaviour
         {
             for (int i = 0; i < transform.childCount; i++)
             {
-                var e = transform.GetChild(i);
+                Transform e = transform.GetChild(i);
                 RoundPosition(e);
             }
         }
@@ -31,7 +31,7 @@ public class TilesController : MonoBehaviour
 
     public void ChangeSprite(int i, SpriteRenderer sr)
     {
-        var index = TileSprites.FindIndex(s => s == sr.sprite);
+        int index = TileSprites.FindIndex(s => s == sr.sprite);
         Index = index;
         Index = Mathf.Clamp(i + Index, 0, TileSprites.Count);
         sr.sprite = TileSprites[Index];

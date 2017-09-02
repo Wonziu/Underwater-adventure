@@ -11,8 +11,8 @@ public class Player : Character
     public List<Key> Keys;
     public List<SecretItem> SecretItems;
     public int AmmoAmount;
+    public int CoinsAmount;
 
-    private int CoinsAmount;
     private Rigidbody2D myRigidbody2D;
     private float horizontal;
     private float vertical;
@@ -29,7 +29,6 @@ public class Player : Character
         MyGameManager.SetAmmoAmount(AmmoAmount);
     }
 
-    // Update is called once per frame
     private void Update()
     {
         horizontal = Input.GetAxis("Horizontal");
@@ -44,7 +43,6 @@ public class Player : Character
     private void FixedUpdate()
     {
         myRigidbody2D.velocity = new Vector2(horizontal * MovementSpeed, vertical * MovementSpeed);
-        // transform.Translate(new Vector2(horizontal * MovementSpeed, vertical * MovementSpeed) * Time.deltaTime);
     }
 
     private void HandleInput()
@@ -80,7 +78,7 @@ public class Player : Character
     {
         for (int i = 0; i < Keys.Count; i++)
         {
-            var key = Keys[i];
+            Key key = Keys[i];
             if (key.PlayerCheckpoint == CheckPoint)
             {
                 key.ResetKey();

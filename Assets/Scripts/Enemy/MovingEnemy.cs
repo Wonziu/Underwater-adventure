@@ -86,7 +86,7 @@ public class MovingEnemy : Character
     public void OnDrawGizmosSelected()
     {
         Vector3 last = Vector3.zero;
-        foreach (var waypoint in Waypoints)
+        foreach (Vector2 waypoint in Waypoints)
         {
             if (last != Vector3.zero)
             {

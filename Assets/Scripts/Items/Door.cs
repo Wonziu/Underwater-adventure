@@ -10,13 +10,12 @@ public class Door : MonoBehaviour
     {
         if (coll.collider.tag == "Player")
         {
-            foreach (var key in coll.collider.GetComponent<Player>().Keys)
+            foreach (Key key in coll.collider.GetComponent<Player>().Keys)
                 if (key == Key)
                 {
                     gameObject.SetActive(false);
                     coll.collider.GetComponent<Player>().Keys.Remove(key);
                 }
         }
-
     }
 }
