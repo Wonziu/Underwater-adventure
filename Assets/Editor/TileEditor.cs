@@ -22,10 +22,10 @@ public class TileEditor : Editor
         {
             if (e.keyCode == KeyCode.Keypad1)
                 myTilesController.ChangeSprite(-1, mySpriteRenderer);
-            else if (e.keyCode == KeyCode.Keypad3)
-                myTilesController.ChangeSprite(1, mySpriteRenderer);
             else if (e.keyCode == KeyCode.Keypad2)
                 myTilesController.RotateTile(mySpriteRenderer.transform);
+            else if (e.keyCode == KeyCode.Keypad3)
+                myTilesController.ChangeSprite(1, mySpriteRenderer);        
         }
     }
 }

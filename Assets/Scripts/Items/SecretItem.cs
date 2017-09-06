@@ -9,7 +9,7 @@ public class SecretItem : MonoBehaviour
         if (coll.tag == "Player")
         {
             gameObject.SetActive(false);
-            coll.GetComponent<Player>().SecretItems.Add(this);
+            coll.GetComponent<Player>().SecretItemsAmount++;
         }
     }
 }

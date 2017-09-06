@@ -9,12 +9,13 @@ public class GameManager : MonoBehaviour
 {
     private int MaxCoinsAmount;
 
-    public Player MyPlayer;
     public GameObject UIObject;
+    public GUITexture Overlay;
+    public Player MyPlayer;
     public Transform CoinsParent;
     public Transform SecretItemsParent;
 
-    public GUITexture Overlay;
+    
     public Text AmmoText;
     public Text CoinsText;
     public Text MaxCoinsText;
@@ -53,7 +54,7 @@ public class GameManager : MonoBehaviour
         if (coll.tag == "Player")
         {
             SaveResults();
-            StartCoroutine(FadeInAnimation( () => SceneManager.LoadScene("LevelSelectionScene")));
+            StartCoroutine(FadeInAnimation(() => SceneManager.LoadScene("LevelSelectionScene")));
         }
     }
 
@@ -63,23 +64,15 @@ public class GameManager : MonoBehaviour
 
         int index = SceneManager.GetActiveScene().buildIndex;
 
-        if (index > save.Levels.Count - 1)
-        {
-            save.Levels.Add(new Level
-            {
-                Coins = MyPlayer.CoinsAmount,
-                SecretItems = MyPlayer.SecretItems.Count
-            });
-        }
-        else
-        {     
-            if (save.Levels[index].Coins < MyPlayer.CoinsAmount)
-                save.Levels[SceneManager.GetActiveScene().buildIndex].Coins = MyPlayer.CoinsAmount;
-            if (save.Levels[index].SecretItems < MyPlayer.CoinsAmount)
-                save.Levels[SceneManager.GetActiveScene().buildIndex].SecretItems = MyPlayer.SecretItems.Count;
-        }
+        if (index == save.Levels.Count- 1) 
+            save.Levels.Add(new Level());
 
-        FileManagment.WriteFile("save.dat", save);        
+        if (save.Levels[index].Coins < MyPlayer.CoinsAmount)
+            save.Levels[SceneManager.GetActiveScene().buildIndex].Coins = MyPlayer.CoinsAmount;
+        if (save.Levels[index].SecretItems < MyPlayer.CoinsAmount)
+            save.Levels[SceneManager.GetActiveScene().buildIndex].SecretItems = MyPlayer.SecretItemsAmount;
+
+        FileManagment.WriteFile("save.dat", save);
     }
 
     public IEnumerator FadeInAnimation(UnityAction afterFadeOut = null)
@@ -115,8 +108,6 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.3f);
         UIObject.SetActive(true);
-
-       
     }
 
     public IEnumerator DeathAnimation(Player myPlayer, UnityAction afterFadeIn = null, UnityAction afterFadeOut = null)

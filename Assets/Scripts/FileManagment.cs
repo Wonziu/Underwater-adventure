@@ -11,7 +11,8 @@ public static class FileManagment
     {
         string path = GetPath(fileName);
 
-        if (File.Exists(path)) { 
+        if (File.Exists(path))
+        {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = File.OpenRead(path);
 

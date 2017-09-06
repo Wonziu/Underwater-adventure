@@ -22,7 +22,9 @@ public class PrefabPlacerEditor : Editor
             if (e.keyCode == KeyCode.Keypad1)
                 myTilesController.PlaceTilePrefab(mousePosition, 0);  
             else if (e.keyCode == KeyCode.Keypad2)
-                myTilesController.PlaceTilePrefab(mousePosition, myTilesController.TileSprites.Count - 1);   
+                myTilesController.PlaceTilePrefab(mousePosition, myTilesController.TileSprites.Count - 1);
+            else if (e.keyCode == KeyCode.Keypad3)
+                myTilesController.PlaceCoinPrefab(mousePosition);
             else if (e.keyCode == KeyCode.Keypad4)
                 myTilesController.PlacePlantPrefab(mousePosition, 0); 
         }

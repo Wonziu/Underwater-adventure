@@ -29,7 +29,7 @@ public class ScrollingBackground : MonoBehaviour
         rightIndex = layers.Length - 1;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (Paralax)
         {

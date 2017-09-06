@@ -24,14 +24,6 @@ public class LevelSelectionManager : MonoBehaviour
         LoadSave();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Z))
-            SceneManager.LoadScene(0);
-        if (Input.GetKeyDown(KeyCode.X))
-            SceneManager.LoadScene(1);
-    }
-
     public void OpenLevelMenu(int level)
     {
         LevelMenu.gameObject.SetActive(true);
@@ -89,11 +81,7 @@ public class LevelSelectionManager : MonoBehaviour
                 Levels = new List<Level>()
             };
 
-            newSave.Levels.Add(new Level
-            {
-                Coins = 0,
-                SecretItems = 0
-            });
+            newSave.Levels.Add(new Level()); 
 
             FileManagment.WriteFile("save.dat", newSave);
         }

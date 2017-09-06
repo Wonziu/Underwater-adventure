@@ -9,7 +9,7 @@ public class Player : Character
     public Weapon MyWeapon;
     public Vector2 CheckPoint;
     public List<Key> Keys;
-    public List<SecretItem> SecretItems;
+    public int SecretItemsAmount;
     public int AmmoAmount;
     public int CoinsAmount;
 
