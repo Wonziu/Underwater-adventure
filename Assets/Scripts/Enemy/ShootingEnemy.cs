@@ -23,4 +23,10 @@ public class ShootingEnemy : MonoBehaviour
             }
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D coll)
+    {
+        if (coll.tag == "Player")
+            coll.GetComponent<Player>().KillPlayer();
+    }
 }

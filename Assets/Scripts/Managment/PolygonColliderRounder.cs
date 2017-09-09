@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class PolygonColliderManager : MonoBehaviour
+public class PolygonColliderRounder : MonoBehaviour
 {
     private PolygonCollider2D myPolygonCollider2D;
 
@@ -19,7 +19,7 @@ public class PolygonColliderManager : MonoBehaviour
             int x = (int)points[i].x;
             int y = (int)points[i].y;
 
-            if (x > 0)
+            if (x >= 0)
                 points[i].Set(x + 0.5f, y + 0.5f);
             else points[i].Set(x - 0.5f, y + 0.5f);
 
