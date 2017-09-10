@@ -6,6 +6,7 @@ using UnityEngine;
 public class Player : Character
 {
     public GameManager MyGameManager;
+    public CameraController MyCameraController;
     public Weapon MyWeapon;
     public Vector2 CheckPoint;
     public List<Key> Keys;
@@ -31,18 +32,22 @@ public class Player : Character
 
     private void Update()
     {
-        horizontal = Input.GetAxis("Horizontal");
-        vertical = Input.GetAxis("Vertical");
-
         MyWeapon.Aim(Camera.main.ScreenToWorldPoint(Input.mousePosition));
 
+        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxis("Vertical");
         HandleInput();
-        Flip();
     }
 
     private void FixedUpdate()
     {
-        myRigidbody2D.velocity = new Vector2(horizontal * MovementSpeed, vertical * MovementSpeed);
+        if (!MyCameraController.IsMoving)
+        {
+            Flip();
+            myRigidbody2D.velocity = new Vector2(horizontal * MovementSpeed, vertical * MovementSpeed);
+        }
+        else
+            myRigidbody2D.velocity = Vector2.zero;
     }
 
     private void HandleInput()
@@ -71,7 +76,7 @@ public class Player : Character
     {
         gameObject.SetActive(true);
         RemoveKeys();
-        transform.position = CheckPoint;     
+        transform.position = CheckPoint;
     }
 
     private void RemoveKeys()

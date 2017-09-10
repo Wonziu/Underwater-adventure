@@ -6,11 +6,11 @@ public class Character : MonoBehaviour
 {
     public float MovementSpeed;
     public bool FacingLeft = true;
-    public Rigidbody2D myRigidbody2D;
+    public Rigidbody2D MyRigidbody2D;
 
     public void Awake()
     {
-        myRigidbody2D = GetComponent<Rigidbody2D>();
+        MyRigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     public void ChangeDirection()

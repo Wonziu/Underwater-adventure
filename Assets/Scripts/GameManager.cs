@@ -14,8 +14,7 @@ public class GameManager : MonoBehaviour
     public Player MyPlayer;
     public Transform CoinsParent;
     public Transform SecretItemsParent;
-
-    
+ 
     public Text AmmoText;
     public Text CoinsText;
     public Text MaxCoinsText;
@@ -24,12 +23,6 @@ public class GameManager : MonoBehaviour
     {
         SetMaxCoinsAmount();
         StartCoroutine(FadeOutAnimation());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void SetCoinsAmount(int coins)
@@ -62,15 +55,15 @@ public class GameManager : MonoBehaviour
     {
         SaveData save = FileManagment.ReadFile<SaveData>("save.dat");
 
-        int index = SceneManager.GetActiveScene().buildIndex;
+        int index = SceneManager.GetActiveScene().buildIndex - 1; // because of level selection Scene
 
-        if (index == save.Levels.Count- 1) 
+        if (index == save.Levels.Count - 1) 
             save.Levels.Add(new Level());
 
         if (save.Levels[index].Coins < MyPlayer.CoinsAmount)
-            save.Levels[SceneManager.GetActiveScene().buildIndex].Coins = MyPlayer.CoinsAmount;
+            save.Levels[index].Coins = MyPlayer.CoinsAmount;
         if (save.Levels[index].SecretItems < MyPlayer.CoinsAmount)
-            save.Levels[SceneManager.GetActiveScene().buildIndex].SecretItems = MyPlayer.SecretItemsAmount;
+            save.Levels[index].SecretItems = MyPlayer.SecretItemsAmount;
 
         FileManagment.WriteFile("save.dat", save);
     }

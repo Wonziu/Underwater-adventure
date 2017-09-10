@@ -38,6 +38,8 @@ public class LevelSelectionManager : MonoBehaviour
 
     private void SetLevelMenuValues(int level)
     {
+        level = level - 1;
+
         LevelName.text = Levels[level].LevelName;
         LevelMaxCoins.text = Levels[level].Coins.ToString();
         LevelMaxSecretItems.text = Levels[level].SecretItems.ToString();

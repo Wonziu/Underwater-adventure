@@ -2,32 +2,29 @@
 
 public class MovingEnemy : Character
 {
+    private float percentBetweenwaypoints;
+    private int fromWaypointIndex;
+    private float nextMoveTime;
+    private Vector2 velocity;
+
     public Vector2[] Waypoints;
     public bool Cyclic;
     public float WaitTime;
     [Range(0, 3)]
     public float easeAmount;
 
-    private float percentBetweenwaypoints;
-    private int fromWaypointIndex;
-    private float nextMoveTime;
-    private Vector2 velocity;
-
     private void Awake()
     {
         base.Awake();
     }
 
-    private void Update()
-    {
-    }
-
     private void FixedUpdate()
     {
         velocity = MoveTowardsWaypoint();
+
         if (velocity != Vector2.zero)
         {
-            myRigidbody2D.MovePosition(velocity);
+            MyRigidbody2D.MovePosition(velocity);
             Flip();
         }
     }
