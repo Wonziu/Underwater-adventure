@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour
     public Player MyPlayer;
     public Transform CoinsParent;
     public Transform SecretItemsParent;
- 
+
+    public bool BossFight;
     public Text AmmoText;
     public Text CoinsText;
     public Text MaxCoinsText;

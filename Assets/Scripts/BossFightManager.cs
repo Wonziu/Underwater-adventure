@@ -4,42 +4,38 @@ using UnityEngine;
 
 public class BossFightManager : MonoBehaviour
 {
+    private float ortographicSize;
+
     public float HorizontalCameraSize;
     public float VerticalCameraSize;
     public CameraController MyCameraController;
-    private float d;
+    public FirstBoss Boss;
 
-	void Start ()
-	{
-        SetCameraSize();
-        
- 
-
-        //
-        
-    }
-	
-	void Update ()
+    void Start()
     {
-		
-	}
+        SetCameraSize();
+    }
+
+    void Update()
+    {
+
+    }
 
     private void SetCameraSize()
     {
-        
-
         if (VerticalCameraSize * Camera.main.aspect < HorizontalCameraSize)
         {
-            d = HorizontalCameraSize / (2*Camera.main.aspect);
+            ortographicSize = HorizontalCameraSize / (2 * Camera.main.aspect);
         }
-        else d = VerticalCameraSize / 2;
+        else ortographicSize = VerticalCameraSize / 2;
     }
 
     private void OnTriggerEnter2D(Collider2D coll)
     {
         if (coll.tag == "Player")
         {
-            MyCameraController.SetCameraPosition(transform.position, d);
+            MyCameraController.SetCameraPosition(transform.position, ortographicSize, () => Boss.ActivateBoss());
+            GetComponent<BoxCollider2D>().enabled = false;
         }
     }
 }

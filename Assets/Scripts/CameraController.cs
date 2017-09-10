@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CameraController : MonoBehaviour
 {
@@ -35,13 +36,13 @@ public class CameraController : MonoBehaviour
         else myCamera.transform.localPosition = new Vector2(myPlayerPosition.x, myPlayerPosition.y);
     }
 
-    public void SetCameraPosition(Vector2 pos, float size)
+    public void SetCameraPosition(Vector2 pos, float size, UnityAction afterCameraZoom = null)
     {
         isPositionSet = true;
-        StartCoroutine(CameraPositionLerp(pos, size));
+        StartCoroutine(CameraPositionLerp(pos, size, afterCameraZoom));
     }
 
-    private IEnumerator CameraPositionLerp(Vector2 endPos, float endSize)
+    private IEnumerator CameraPositionLerp(Vector2 endPos, float endSize, UnityAction afterCameraZoom = null)
     {
         IsMoving = true;
 
@@ -59,5 +60,8 @@ public class CameraController : MonoBehaviour
         }
 
         IsMoving = false;
+
+        if (afterCameraZoom != null)
+            afterCameraZoom.Invoke();
     }
 }

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ITurtleBossState
+public interface IBossState
 {
     void Execute();
-    void Enter(TurtleBoss enemy);
+    void ExecuteInFixed();
+    void Enter(FirstBoss enemy);
     void Exit();
-    void OnCollisionEnter(Collision2D coll);
 }

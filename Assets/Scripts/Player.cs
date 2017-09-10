@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : Character
 {
@@ -14,15 +15,8 @@ public class Player : Character
     public int AmmoAmount;
     public int CoinsAmount;
 
-    private Rigidbody2D myRigidbody2D;
     private float horizontal;
     private float vertical;
-
-    private void Awake()
-    {
-        myRigidbody2D = GetComponent<Rigidbody2D>();
-        base.Awake();
-    }
 
     private void Start()
     {
@@ -44,10 +38,10 @@ public class Player : Character
         if (!MyCameraController.IsMoving)
         {
             Flip();
-            myRigidbody2D.velocity = new Vector2(horizontal * MovementSpeed, vertical * MovementSpeed);
+            MyRigidbody2D.velocity = new Vector2(horizontal * MovementSpeed, vertical * MovementSpeed);
         }
         else
-            myRigidbody2D.velocity = Vector2.zero;
+            MyRigidbody2D.velocity = Vector2.zero;
     }
 
     private void HandleInput()
@@ -68,11 +62,24 @@ public class Player : Character
 
     public void KillPlayer()
     {
-        MyGameManager.StartCoroutine(MyGameManager.DeathAnimation(this, ResetPlayer));
-        gameObject.SetActive(false);
+        if (!MyGameManager.BossFight)
+        {
+            MyGameManager.StartCoroutine(MyGameManager.DeathAnimation(this, ResetPlayer));
+            gameObject.SetActive(false);
+        }
+        else 
+            ReloadLevel();
+        
     }
 
-    public void ResetPlayer()
+    private void ReloadLevel()
+    {
+        gameObject.SetActive(false);
+        MyGameManager.StartCoroutine(MyGameManager.DeathAnimation(this,
+            () => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single)));
+    }
+
+    private void ResetPlayer()
     {
         gameObject.SetActive(true);
         RemoveKeys();

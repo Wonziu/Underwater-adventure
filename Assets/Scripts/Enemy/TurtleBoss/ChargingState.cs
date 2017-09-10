@@ -2,31 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChargingState : ITurtleBossState
+public class ChargingState : IBossState
 {
-    private TurtleBoss myBoss;
+    private FirstBoss myBoss;
     private int chargeCount;
 
     public void Execute()
     {
         if (!myBoss.isCharging)
-        {            
-            myBoss.StartCoroutine(myBoss.ChargeAtPlayer());
+        {
+            if (chargeCount == myBoss.MaxChargesCount)
+            {
+                myBoss.nextState = new ShootingState();
+                myBoss.ChangeState(new MovingState());
+            }
+            else
+            {
+                chargeCount++;
+                myBoss.StartCoroutine(myBoss.ChargeAtPlayer());
+            }
         }
     }
 
-    public void Enter(TurtleBoss enemy)
+    public void ExecuteInFixed()
+    {
+        myBoss.MyRigidbody2D.velocity = myBoss.ChargeDirection;
+    }
+
+    public void Enter(FirstBoss enemy)
     {
         myBoss = enemy;
     }
 
     public void Exit()
     {
-        
-    }
 
-    public void OnCollisionEnter(Collision2D coll)
-    {
-        
     }
 }
