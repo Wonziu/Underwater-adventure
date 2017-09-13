@@ -60,16 +60,15 @@ public class Player : Character
             ChangeDirection();
     }
 
-    public void KillPlayer()
+    public override void KillCharacter()
     {
         if (!MyGameManager.BossFight)
         {
             MyGameManager.StartCoroutine(MyGameManager.DeathAnimation(this, ResetPlayer));
             gameObject.SetActive(false);
         }
-        else 
+        else
             ReloadLevel();
-        
     }
 
     private void ReloadLevel()
@@ -110,5 +109,21 @@ public class Player : Character
         CheckPoint = pos;
         AmmoAmount += 1;
         MyGameManager.SetAmmoAmount(AmmoAmount);
+    }
+
+    private void OnTriggerEnter2D(Collider2D coll)
+    {
+        if (coll.tag == "Enemy")
+            KillCharacter();
+        else if (coll.tag == "Coin")
+        {
+            coll.gameObject.SetActive(false);
+            PickUpCoin();
+        }
+        else if (coll.tag == "SecretItem")
+        {
+            coll.gameObject.SetActive(false);
+            SecretItemsAmount++;
+        }
     }
 }

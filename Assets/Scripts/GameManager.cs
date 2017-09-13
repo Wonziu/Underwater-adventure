@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        //QualitySettings.vSyncCount = 0;  // VSync must be disabled
+        //Application.targetFrameRate = 30;
+
         SetMaxCoinsAmount();
         StartCoroutine(FadeOutAnimation());
     }

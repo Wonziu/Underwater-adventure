@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class EnemySight : MonoBehaviour
 {
-    public ShootingEnemy Enemy;
-
-    private void Start()
-    {
-        Enemy = transform.parent.GetComponent<ShootingEnemy>();
-    }
+    public Character Enemy;
 
     private void OnTriggerEnter2D(Collider2D other)
     {

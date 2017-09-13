@@ -6,18 +6,21 @@ using UnityEngine.SceneManagement;
 
 public class FirstBoss : Character
 {
-    private IBossState currentState;
-    public IBossState nextState;
     private bool isSeen;
+    private IBossState currentState;
+
     [HideInInspector]
+    public int ShootingPositionIndex;
+    [HideInInspector]
+    public Vector3 NextShootingPosition;
+    [HideInInspector]
+
     public Vector3 ChargeDirection;
-    public Vector3 ShootingPosition;
-    public int MaxChargesCount;
     public Weapon MyWeapon;
-
-    public Player MyPlayer;
-
+    public List<Vector3> ShootingPositions;
+    public IBossState nextState;
     public bool isCharging;
+    public int MaxChargesCount;
 
     private void Start()
     {
@@ -27,8 +30,6 @@ public class FirstBoss : Character
     {
         if (currentState != null)
             currentState.Execute();
-
-        Debug.Log(currentState);
     }
 
     private void FixedUpdate()
@@ -44,7 +45,7 @@ public class FirstBoss : Character
 
     public void MoveBossToStartPosition()
     {
-        
+
     }
 
     public void ChangeState(IBossState newState)
@@ -61,28 +62,28 @@ public class FirstBoss : Character
         isCharging = true;
         isSeen = true;
 
-        ChargeDirection = Vector3.Normalize(MyPlayer.transform.position - transform.position) * MovementSpeed;
+        ChargeDirection = Vector3.Normalize(Target.transform.position - transform.position) * MovementSpeed;
 
-        while (isSeen)     
+        while (isSeen)
             yield return null;
 
         ChargeDirection = Vector3.zero;
 
         yield return new WaitForSeconds(0.25f);
-        isCharging = false;   
-    }
-
-    private void OnTriggerEnter2D(Collider2D coll)
-    {
-        if (coll.tag == "Player")
-        {
-            MyPlayer.KillPlayer();
-        }
+        isCharging = false;
     }
 
     private void OnTriggerExit2D(Collider2D coll)
     {
         if (coll.tag == "BossArea")
             isSeen = false;
+    }
+
+    public void GetNextShootingPosition()
+    {
+        ShootingPositionIndex = (ShootingPositionIndex + 1) % ShootingPositions.Count;
+
+        NextShootingPosition = ShootingPositions[ShootingPositionIndex];
+        Debug.Log(ShootingPositionIndex);
     }
 }

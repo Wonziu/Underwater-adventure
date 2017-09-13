@@ -74,12 +74,6 @@ public class MovingEnemy : Character
         return newPos;
     }
 
-    private void OnTriggerEnter2D(Collider2D coll)
-    {
-        if (coll.tag == "Player")
-            coll.GetComponent<Player>().KillPlayer();
-    }
-
     public void OnDrawGizmosSelected()
     {
         Vector3 last = Vector3.zero;

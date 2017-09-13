@@ -10,6 +10,7 @@ public class BossFightManager : MonoBehaviour
     public float VerticalCameraSize;
     public CameraController MyCameraController;
     public FirstBoss Boss;
+    public Door BossDoor;
 
     void Start()
     {
@@ -36,6 +37,7 @@ public class BossFightManager : MonoBehaviour
         {
             MyCameraController.SetCameraPosition(transform.position, ortographicSize, () => Boss.ActivateBoss());
             GetComponent<BoxCollider2D>().enabled = false;
+            BossDoor.gameObject.SetActive(true);
         }
     }
 }
