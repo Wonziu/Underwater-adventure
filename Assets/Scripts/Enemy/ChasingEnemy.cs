@@ -5,6 +5,7 @@ using UnityEngine;
 public class ChasingEnemy : Character
 {
     private Vector2 startPosition;
+    private Vector2 velocity;
 
     public int HealthPoints;
 
@@ -16,21 +17,24 @@ public class ChasingEnemy : Character
     void Update()
     {
         if (Target != null)
-            ChaseTarget();
-        else 
-            ReturnToStart();
+            velocity = Target.transform.position;
+        else
+            velocity = startPosition;
+
+        MoveToPoint(velocity);
+        Flip(velocity);
     }
 
-    private void ChaseTarget()
+    private void MoveToPoint(Vector2 v)
     {
-        MyRigidbody2D.MovePosition(Vector2.MoveTowards(transform.position, Target.transform.position,
+        MyRigidbody2D.MovePosition(Vector2.MoveTowards(transform.position, v,
             MovementSpeed * Time.deltaTime));
     }
 
-    private void ReturnToStart()
+    private void Flip(Vector2 v)
     {
-        MyRigidbody2D.MovePosition(Vector2.MoveTowards(transform.position, startPosition,
-            MovementSpeed * Time.deltaTime));
+        if (v.x - transform.position.x > 0 && FacingLeft || v.x - transform.position.x < 0 && !FacingLeft)
+            ChangeDirection();
     }
 
     public override void KillCharacter()

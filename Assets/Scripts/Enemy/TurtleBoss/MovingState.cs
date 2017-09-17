@@ -8,7 +8,7 @@ public class MovingState : IBossState
     
     public void Execute()
     {
-        if (myBoss.transform.position == myBoss.NextShootingPosition)
+        if (myBoss.transform.position == myBoss.NextPosition)
         {
             myBoss.ChangeState(myBoss.nextState);
         }
@@ -16,14 +16,14 @@ public class MovingState : IBossState
 
     public void ExecuteInFixed()
     {
-        myBoss.MyRigidbody2D.MovePosition(Vector2.MoveTowards(myBoss.transform.position, myBoss.NextShootingPosition,
+        myBoss.MyRigidbody2D.MovePosition(Vector2.MoveTowards(myBoss.transform.position, myBoss.NextPosition,
             myBoss.MovementSpeed * Time.deltaTime));
     }
 
     public void Enter(FirstBoss enemy)
     {
         myBoss = enemy;
-        myBoss.GetNextShootingPosition();
+        myBoss.GetNextPosition();
     }
 
     public void Exit()

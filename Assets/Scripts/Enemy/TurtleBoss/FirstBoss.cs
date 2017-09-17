@@ -12,19 +12,17 @@ public class FirstBoss : Character
     [HideInInspector]
     public int ShootingPositionIndex;
     [HideInInspector]
-    public Vector3 NextShootingPosition;
-    [HideInInspector]
+    public Vector3 NextPosition;
 
+    public List<EnemyEgg> Eggs;
     public Vector3 ChargeDirection;
     public Weapon MyWeapon;
     public List<Vector3> ShootingPositions;
     public IBossState nextState;
     public bool isCharging;
+    public bool isSpawning;
     public int MaxChargesCount;
-
-    private void Start()
-    {
-    }
+    public float EnemySpawnDelay;
 
     private void Update()
     {
@@ -73,17 +71,29 @@ public class FirstBoss : Character
         isCharging = false;
     }
 
+    public IEnumerator SpawnEggs()
+    {
+        isSpawning = true;
+
+        foreach (var enemyEgg in Eggs)
+        {
+            enemyEgg.gameObject.SetActive(true);
+            yield return new WaitForSeconds(EnemySpawnDelay);
+        }
+
+        isSpawning = false;
+    }
+
     private void OnTriggerExit2D(Collider2D coll)
     {
         if (coll.tag == "BossArea")
             isSeen = false;
     }
 
-    public void GetNextShootingPosition()
+    public void GetNextPosition()
     {
         ShootingPositionIndex = (ShootingPositionIndex + 1) % ShootingPositions.Count;
 
-        NextShootingPosition = ShootingPositions[ShootingPositionIndex];
-        Debug.Log(ShootingPositionIndex);
+        NextPosition = ShootingPositions[ShootingPositionIndex];
     }
 }

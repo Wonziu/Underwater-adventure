@@ -18,9 +18,9 @@ public class ShootingState : IBossState
 
         else
         {
-            if (myBoss.NextShootingPosition == myBoss.ShootingPositions[0])
+            if (myBoss.NextPosition == myBoss.ShootingPositions[0])
             {
-                myBoss.ChangeState(new ChargingState());
+                myBoss.ChangeState(new SpawningEggsState());
             }
             else
             {
