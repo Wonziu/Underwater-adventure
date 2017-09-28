@@ -5,8 +5,10 @@ using UnityEngine;
 public class EnemyEgg : Character
 {
     public float SpawnCooldown;
-    public GameObject EnemyToSpawn;
     public int HealthPoints;
+
+    public ChasingEnemyParent EnemyToSpawn;
+    public PolygonCollider2D Area;
 
     void OnEnable()
     {
@@ -17,7 +19,10 @@ public class EnemyEgg : Character
     {
         yield return new WaitForSeconds(SpawnCooldown);
 
-        Instantiate(EnemyToSpawn, transform.position, Quaternion.identity);
+        ChasingEnemyParent o = Instantiate(EnemyToSpawn, Vector3.zero, Quaternion.identity);
+        o.Enemy.transform.position = transform.position;
+        o.EnemySight.points = Area.points;
+        o.EnemySight.transform.position = Area.transform.position;
 
         gameObject.SetActive(false);
     }

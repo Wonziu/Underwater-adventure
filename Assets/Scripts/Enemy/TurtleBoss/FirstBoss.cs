@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class FirstBoss : Character
+public class FirstBoss : Boss
 {
     private bool isSeen;
     private IBossState currentState;
@@ -13,14 +13,16 @@ public class FirstBoss : Character
     public int ShootingPositionIndex;
     [HideInInspector]
     public Vector3 NextPosition;
+    [HideInInspector]
+    public Vector3 ChargeDirection;
 
     public List<EnemyEgg> Eggs;
-    public Vector3 ChargeDirection;
     public Weapon MyWeapon;
     public List<Vector3> ShootingPositions;
     public IBossState nextState;
     public bool isCharging;
     public bool isSpawning;
+    public int ChargeMovementSpeed;
     public int MaxChargesCount;
     public float EnemySpawnDelay;
 
@@ -41,11 +43,6 @@ public class FirstBoss : Character
         ChangeState(new ChargingState());
     }
 
-    public void MoveBossToStartPosition()
-    {
-
-    }
-
     public void ChangeState(IBossState newState)
     {
         if (currentState != null)
@@ -60,7 +57,7 @@ public class FirstBoss : Character
         isCharging = true;
         isSeen = true;
 
-        ChargeDirection = Vector3.Normalize(Target.transform.position - transform.position) * MovementSpeed;
+        ChargeDirection = Vector3.Normalize(Target.transform.position - transform.position) * ChargeMovementSpeed;
 
         while (isSeen)
             yield return null;

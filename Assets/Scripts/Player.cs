@@ -113,7 +113,7 @@ public class Player : Character
 
     private void OnTriggerEnter2D(Collider2D coll)
     {
-        if (coll.tag == "Enemy")
+        if (coll.tag == "Enemy" || coll.tag == "Boss")
             KillCharacter();
         else if (coll.tag == "Coin")
         {

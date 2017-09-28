@@ -1,16 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BossFightManager : MonoBehaviour
 {
     private float ortographicSize;
+    public float fillAmount;
 
     public float HorizontalCameraSize;
     public float VerticalCameraSize;
     public CameraController MyCameraController;
     public FirstBoss Boss;
     public Door BossDoor;
+
+    public Image BossHealthBar;
+    public Image BossUI;
 
     void Start()
     {
@@ -19,15 +24,23 @@ public class BossFightManager : MonoBehaviour
 
     void Update()
     {
+        HandleBar();
+    }
 
+    private float MapHealthValue(float value, float inMin, float inMax, float outMin, float outMax)
+    {
+        return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+    }
+
+    private void HandleBar()
+    {
+        BossHealthBar.fillAmount = MapHealthValue(Boss.HealthPoints, 0, Boss.MaxHealthPoints, 0, 1);
     }
 
     private void SetCameraSize()
     {
         if (VerticalCameraSize * Camera.main.aspect < HorizontalCameraSize)
-        {
             ortographicSize = HorizontalCameraSize / (2 * Camera.main.aspect);
-        }
         else ortographicSize = VerticalCameraSize / 2;
     }
 
@@ -37,6 +50,7 @@ public class BossFightManager : MonoBehaviour
         {
             MyCameraController.SetCameraPosition(transform.position, ortographicSize, () => Boss.ActivateBoss());
             GetComponent<BoxCollider2D>().enabled = false;
+            BossUI.gameObject.SetActive(true);
             BossDoor.gameObject.SetActive(true);
         }
     }

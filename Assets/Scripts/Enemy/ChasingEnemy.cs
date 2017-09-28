@@ -39,9 +39,8 @@ public class ChasingEnemy : Character
 
     public override void KillCharacter()
     {
-        if (HealthPoints > 0)
-            HealthPoints--;
-        else
+        HealthPoints--;
+        if (HealthPoints <= 0)
             gameObject.SetActive(false);
     }
 }
