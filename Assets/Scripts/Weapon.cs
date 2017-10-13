@@ -22,7 +22,7 @@ public class Weapon : MonoBehaviour
         Muzzle.transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
     }
 
-    public void Shoot()
+    public bool Shoot()
     {
         if (canShoot)
         {
@@ -30,7 +30,10 @@ public class Weapon : MonoBehaviour
 
             Projectile newProjectile = Instantiate(MyProjectile, Muzzle.position, Muzzle.rotation);
             newProjectile.SetSpeed(ProjectileSpeed);
+
+            return true;
         }
+        return false;
     }
 
     private IEnumerator ShootingCooldown()

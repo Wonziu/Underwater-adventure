@@ -10,7 +10,7 @@ public class MovingState : IBossState
     {
         if (myBoss.transform.position == myBoss.NextPosition)
         {
-            myBoss.ChangeState(myBoss.nextState);
+            myBoss.ChangeState(myBoss.NextState);
         }
     }
 
@@ -28,6 +28,6 @@ public class MovingState : IBossState
 
     public void Exit()
     {
-        myBoss.nextState = null;
+        myBoss.NextState = null;
     }
 }

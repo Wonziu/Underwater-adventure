@@ -4,14 +4,23 @@ using UnityEngine;
 
 public class EnemyEgg : Character
 {
+    private Animator myAnimator;
+    private const float animationDuration = 0.333f;
+
     public float SpawnCooldown;
     public int HealthPoints;
 
     public ChasingEnemyParent EnemyToSpawn;
     public PolygonCollider2D Area;
 
+    void Awake()
+    {
+        myAnimator = GetComponent<Animator>();
+    }
+
     void OnEnable()
     {
+        SetAnimationDuration();
         StartCoroutine(SpawnEnemy());
     }
 
@@ -27,7 +36,12 @@ public class EnemyEgg : Character
         gameObject.SetActive(false);
     }
 
-    public override void KillCharacter()
+    private void SetAnimationDuration()
+    {
+        myAnimator.speed = animationDuration/SpawnCooldown;
+    }
+
+    public override void TakeDamage()
     {
         if (HealthPoints > 0)
             HealthPoints--;

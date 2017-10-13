@@ -8,7 +8,7 @@ public class SpawningEggsState : IBossState
 
     public void Execute()
     {
-        if (!myBoss.isSpawning)
+        if (!myBoss.IsSpawning)
         {
             myBoss.ChangeState(new ChargingState());
         }

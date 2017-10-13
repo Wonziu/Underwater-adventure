@@ -37,7 +37,7 @@ public class ChasingEnemy : Character
             ChangeDirection();
     }
 
-    public override void KillCharacter()
+    public override void TakeDamage()
     {
         HealthPoints--;
         if (HealthPoints <= 0)

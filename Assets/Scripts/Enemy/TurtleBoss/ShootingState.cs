@@ -9,11 +9,12 @@ public class ShootingState : IBossState
 
     public void Execute()
     {
-        if (AmmoFired < 5)
+        if (AmmoFired < myBoss.BulletsAmount)
         {
-            AmmoFired++;
             myBoss.MyWeapon.Aim(myBoss.Target.transform.position);
-            myBoss.MyWeapon.Shoot();
+
+            if (myBoss.MyWeapon.Shoot())
+                AmmoFired++;
         }
 
         else
@@ -24,15 +25,15 @@ public class ShootingState : IBossState
             }
             else
             {
-                myBoss.nextState = new ShootingState();
+                myBoss.NextState = new ShootingState();
                 myBoss.ChangeState(new MovingState());
-            }        
-        }        
+            }
+        }
     }
 
     public void ExecuteInFixed()
     {
-        
+
     }
 
     public void Enter(FirstBoss enemy)
@@ -42,6 +43,6 @@ public class ShootingState : IBossState
 
     public void Exit()
     {
-        
+
     }
 }

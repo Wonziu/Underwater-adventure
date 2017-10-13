@@ -9,11 +9,11 @@ public class ChargingState : IBossState
 
     public void Execute()
     {
-        if (!myBoss.isCharging)
+        if (!myBoss.IsCharging)
         {
             if (chargeCount == myBoss.MaxChargesCount)
             {
-                myBoss.nextState = new ShootingState();
+                myBoss.NextState = new ShootingState();
                 myBoss.ChangeState(new MovingState());
             }
             else

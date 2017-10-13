@@ -7,17 +7,26 @@ public class Boss : Character
     [HideInInspector]
     public int MaxHealthPoints;
 
+    public BossFightManager MyBossFightManager;
     public int HealthPoints;
-   
+
     private void Start()
     {
         MaxHealthPoints = HealthPoints;
     }
 
-    public override void KillCharacter()
+    public override void TakeDamage()
     {
-        HealthPoints--;      
+        HealthPoints--;
         if (HealthPoints <= 0)
-            gameObject.SetActive(false);
+        {
+            KillBoss();
+        }
+    }
+
+    public virtual void KillBoss()
+    {
+        gameObject.SetActive(false);
+        MyBossFightManager.EndFight();
     }
 }

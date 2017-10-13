@@ -34,9 +34,9 @@ public class Projectile : MonoBehaviour
     private void OnHit(RaycastHit2D hit)
     {
         if (hit.collider.tag == "Enemy" || hit.collider.tag == "Boss")
-            hit.collider.GetComponent<Character>().KillCharacter();
+            hit.collider.GetComponent<Character>().TakeDamage();
         else if (hit.collider.tag == "Player")
-            hit.transform.GetComponent<Player>().KillCharacter();
+            hit.transform.GetComponent<Player>().TakeDamage();
 
         Destroy(gameObject);
     }

@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     public Text AmmoText;
     public Text CoinsText;
     public Text MaxCoinsText;
+    public Text BoostAmountText;
+    public Image BoostAmountBar;
 
     void Start()
     {
@@ -27,6 +29,11 @@ public class GameManager : MonoBehaviour
 
         SetMaxCoinsAmount();
         StartCoroutine(FadeOutAnimation());
+    }
+
+    private void Update()
+    {
+        HandleBar();
     }
 
     public void SetCoinsAmount(int coins)
@@ -44,6 +51,17 @@ public class GameManager : MonoBehaviour
     public void SetAmmoAmount(int ammo)
     {
         AmmoText.text = ammo.ToString();
+    }
+
+    private float MapBoostAmount(float value, float inMin, float inMax, float outMin, float outMax)
+    {
+        return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+    }
+
+    private void HandleBar()
+    {
+        BoostAmountText.text = (int)MyPlayer.BoostAmount + "%";
+        BoostAmountBar.fillAmount = MapBoostAmount(MyPlayer.BoostAmount, 0, 100, 0, 1);
     }
 
     private void OnTriggerEnter2D(Collider2D coll)

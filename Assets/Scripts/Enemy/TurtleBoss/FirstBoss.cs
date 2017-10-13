@@ -19,10 +19,11 @@ public class FirstBoss : Boss
     public List<EnemyEgg> Eggs;
     public Weapon MyWeapon;
     public List<Vector3> ShootingPositions;
-    public IBossState nextState;
-    public bool isCharging;
-    public bool isSpawning;
+    public IBossState NextState;
+    public bool IsCharging;
+    public bool IsSpawning;
     public int ChargeMovementSpeed;
+    public int BulletsAmount;
     public int MaxChargesCount;
     public float EnemySpawnDelay;
 
@@ -54,7 +55,7 @@ public class FirstBoss : Boss
 
     public IEnumerator ChargeAtPlayer()
     {
-        isCharging = true;
+        IsCharging = true;
         isSeen = true;
 
         ChargeDirection = Vector3.Normalize(Target.transform.position - transform.position) * ChargeMovementSpeed;
@@ -65,12 +66,12 @@ public class FirstBoss : Boss
         ChargeDirection = Vector3.zero;
 
         yield return new WaitForSeconds(0.25f);
-        isCharging = false;
+        IsCharging = false;
     }
 
     public IEnumerator SpawnEggs()
     {
-        isSpawning = true;
+        IsSpawning = true;
 
         foreach (var enemyEgg in Eggs)
         {
@@ -78,7 +79,8 @@ public class FirstBoss : Boss
             yield return new WaitForSeconds(EnemySpawnDelay);
         }
 
-        isSpawning = false;
+        yield return new WaitForSeconds(EnemySpawnDelay);
+        IsSpawning = false;
     }
 
     private void OnTriggerExit2D(Collider2D coll)

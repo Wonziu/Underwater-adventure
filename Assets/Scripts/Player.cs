@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
@@ -6,6 +7,12 @@ using UnityEngine.SceneManagement;
 
 public class Player : Character
 {
+    private float horizontal;
+    private float vertical;
+    private float baseSpeed;
+    private bool isBoosting;
+    public bool isFatigued;
+
     public GameManager MyGameManager;
     public CameraController MyCameraController;
     public Weapon MyWeapon;
@@ -14,14 +21,14 @@ public class Player : Character
     public int SecretItemsAmount;
     public int AmmoAmount;
     public int CoinsAmount;
-
-    private float horizontal;
-    private float vertical;
+    public int bonusSpeed;
+    public float BoostAmount = 100;
 
     private void Start()
     {
         CheckPoint = transform.position;
         MyGameManager.SetAmmoAmount(AmmoAmount);
+        baseSpeed = MovementSpeed;
     }
 
     private void Update()
@@ -48,10 +55,38 @@ public class Player : Character
     {
         if (Input.GetKeyDown(KeyCode.Mouse0) && AmmoAmount > 0)
         {
-            MyWeapon.Shoot();
-            AmmoAmount--;
-            MyGameManager.SetAmmoAmount(AmmoAmount);
+            if (MyWeapon.Shoot())
+            {
+                AmmoAmount--;
+                MyGameManager.SetAmmoAmount(AmmoAmount);
+            }
         }
+
+        if (Input.GetKey(KeyCode.Mouse1) && !isFatigued && BoostAmount > 0)
+            UseBoost();
+        else
+            LoadBoost();
+    }
+
+    private void UseBoost()
+    {
+        isBoosting = true;
+        BoostAmount -= 1;
+        MovementSpeed = baseSpeed + bonusSpeed;
+    }
+
+    private void LoadBoost()
+    {
+        BoostAmount = Mathf.Clamp(BoostAmount, 0, 100);
+
+        if (Math.Abs(BoostAmount) < 0.25f)
+            isFatigued = true;
+        else if (Math.Abs(BoostAmount) > 20f)
+            isFatigued = false;
+
+        isBoosting = false;
+        BoostAmount += 0.1f;
+        MovementSpeed = baseSpeed;
     }
 
     private void Flip()
@@ -60,7 +95,7 @@ public class Player : Character
             ChangeDirection();
     }
 
-    public override void KillCharacter()
+    public override void TakeDamage()
     {
         if (!MyGameManager.BossFight)
         {
@@ -114,7 +149,7 @@ public class Player : Character
     private void OnTriggerEnter2D(Collider2D coll)
     {
         if (coll.tag == "Enemy" || coll.tag == "Boss")
-            KillCharacter();
+            TakeDamage();
         else if (coll.tag == "Coin")
         {
             coll.gameObject.SetActive(false);
