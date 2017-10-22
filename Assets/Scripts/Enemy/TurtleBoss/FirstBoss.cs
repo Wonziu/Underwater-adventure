@@ -69,6 +69,14 @@ public class FirstBoss : Boss
         IsCharging = false;
     }
 
+    public void Flip(Vector2 dir)
+    {
+        if (dir.x > 0 && FacingLeft || dir.x < 0 && !FacingLeft)
+        {
+            ChangeDirection();
+        }
+    }
+
     public IEnumerator SpawnEggs()
     {
         IsSpawning = true;

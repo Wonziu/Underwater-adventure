@@ -11,7 +11,7 @@ public class BossFightManager : MonoBehaviour
     public float HorizontalCameraSize;
     public float VerticalCameraSize;
     public CameraController MyCameraController;
-    public FirstBoss Boss;
+    public FirstBoss MyBoss;
     public Door EnterDoor;
     public Door ExitDoor;
 
@@ -35,7 +35,7 @@ public class BossFightManager : MonoBehaviour
 
     private void HandleBar()
     {
-        BossHealthBar.fillAmount = MapHealthValue(Boss.HealthPoints, 0, Boss.MaxHealthPoints, 0, 1);
+        BossHealthBar.fillAmount = MapHealthValue(MyBoss.HealthPoints, 0, MyBoss.MaxHealthPoints, 0, 1);
     }
 
     private void SetCameraSize()
@@ -49,7 +49,8 @@ public class BossFightManager : MonoBehaviour
     {
         if (coll.tag == "Player")
         {
-            MyCameraController.SetCameraPosition(transform.position, ortographicSize, () => Boss.ActivateBoss());
+            MyBoss.gameObject.SetActive(true);
+            MyCameraController.SetCameraPosition(transform.position, ortographicSize, () => MyBoss.ActivateBoss());
             GetComponent<BoxCollider2D>().enabled = false;
             BossUI.gameObject.SetActive(true);
             EnterDoor.gameObject.SetActive(true);
@@ -60,5 +61,6 @@ public class BossFightManager : MonoBehaviour
     {
         EnterDoor.gameObject.SetActive(false);
         ExitDoor.gameObject.SetActive(false);
+        MyCameraController.SetDefaultPosition();
     }
 }

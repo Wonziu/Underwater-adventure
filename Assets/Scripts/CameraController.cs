@@ -36,9 +36,19 @@ public class CameraController : MonoBehaviour
         else myCamera.transform.localPosition = new Vector2(myPlayerPosition.x, myPlayerPosition.y);
     }
 
+    public void SetDefaultPosition()
+    {
+        SetCameraPosition(MyPlayer.transform.position, 3, () => SetIsPosition(false));
+    }
+
+    private void SetIsPosition(bool b)
+    {
+        isPositionSet = b;
+    }
+
     public void SetCameraPosition(Vector2 pos, float size, UnityAction afterCameraZoom = null)
     {
-        isPositionSet = true;
+        SetIsPosition(true);
         StartCoroutine(CameraPositionLerp(pos, size, afterCameraZoom));
     }
 

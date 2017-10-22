@@ -27,6 +27,7 @@ public class ChargingState : IBossState
     public void ExecuteInFixed()
     {
         myBoss.MyRigidbody2D.velocity = myBoss.ChargeDirection;
+        myBoss.Flip(myBoss.MyRigidbody2D.velocity);
     }
 
     public void Enter(FirstBoss enemy)

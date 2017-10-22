@@ -33,7 +33,7 @@ public class ShootingState : IBossState
 
     public void ExecuteInFixed()
     {
-
+        myBoss.Flip(myBoss.Target.transform.position - myBoss.transform.position);
     }
 
     public void Enter(FirstBoss enemy)

@@ -18,6 +18,7 @@ public class MovingState : IBossState
     {
         myBoss.MyRigidbody2D.MovePosition(Vector2.MoveTowards(myBoss.transform.position, myBoss.NextPosition,
             myBoss.MovementSpeed * Time.deltaTime));
+        myBoss.Flip(myBoss.NextPosition - myBoss.transform.position);
     }
 
     public void Enter(FirstBoss enemy)
