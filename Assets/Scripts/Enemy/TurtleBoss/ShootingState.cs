@@ -21,7 +21,13 @@ public class ShootingState : IBossState
         {
             if (myBoss.NextPosition == myBoss.ShootingPositions[0])
             {
-                myBoss.ChangeState(new SpawningEggsState());
+                int i = Random.Range(0, 2);
+
+                if (i == 0)
+                {
+                    myBoss.ChangeState(new ChargingState());
+                }
+                else myBoss.ChangeState(new SpawningEggsState());
             }
             else
             {

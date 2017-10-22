@@ -26,9 +26,11 @@ public class FirstBoss : Boss
     public int BulletsAmount;
     public int MaxChargesCount;
     public float EnemySpawnDelay;
+    public int SpawnCount;
 
     private void Update()
     {
+        
         if (currentState != null)
             currentState.Execute();
     }
@@ -80,11 +82,16 @@ public class FirstBoss : Boss
     public IEnumerator SpawnEggs()
     {
         IsSpawning = true;
+        int i = 0;
 
         foreach (var enemyEgg in Eggs)
         {
+            if (i == SpawnCount)
+                break;
+
             enemyEgg.gameObject.SetActive(true);
             yield return new WaitForSeconds(EnemySpawnDelay);
+            i++;
         }
 
         yield return new WaitForSeconds(EnemySpawnDelay);

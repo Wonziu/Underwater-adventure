@@ -27,6 +27,7 @@ public class SpawningEggsState : IBossState
 
     public void Exit()
     {
-        
+        if (myBoss.SpawnCount < myBoss.Eggs.Count)
+            myBoss.SpawnCount++;
     }
 }

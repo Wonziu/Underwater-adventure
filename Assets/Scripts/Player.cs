@@ -23,12 +23,14 @@ public class Player : Character
     public int CoinsAmount;
     public int bonusSpeed;
     public float BoostAmount = 100;
+    public float MaxBoostAmount;
 
     private void Start()
     {
         CheckPoint = transform.position;
         MyGameManager.SetAmmoAmount(AmmoAmount);
         baseSpeed = MovementSpeed;
+        MaxBoostAmount = BoostAmount;
     }
 
     private void Update()
@@ -77,11 +79,11 @@ public class Player : Character
 
     private void LoadBoost()
     {
-        BoostAmount = Mathf.Clamp(BoostAmount, 0, 100);
+        BoostAmount = Mathf.Clamp(BoostAmount, 0, MaxBoostAmount);
 
         if (Math.Abs(BoostAmount) < 0.25f)
             isFatigued = true;
-        else if (Math.Abs(BoostAmount) > 20f)
+        else if (Math.Abs(BoostAmount) > MaxBoostAmount / 5)
             isFatigued = false;
 
         isBoosting = false;

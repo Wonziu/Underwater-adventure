@@ -49,12 +49,17 @@ public class BossFightManager : MonoBehaviour
     {
         if (coll.tag == "Player")
         {
-            MyBoss.gameObject.SetActive(true);
-            MyCameraController.SetCameraPosition(transform.position, ortographicSize, () => MyBoss.ActivateBoss());
-            GetComponent<BoxCollider2D>().enabled = false;
-            BossUI.gameObject.SetActive(true);
-            EnterDoor.gameObject.SetActive(true);
+            StartFight();
         }
+    }
+
+    private void StartFight()
+    {
+        MyBoss.gameObject.SetActive(true);
+        MyCameraController.SetCameraPosition(transform.position, ortographicSize, () => MyBoss.ActivateBoss());
+        GetComponent<BoxCollider2D>().enabled = false;
+        BossUI.gameObject.SetActive(true);
+        EnterDoor.gameObject.SetActive(true);
     }
 
     public void EndFight()

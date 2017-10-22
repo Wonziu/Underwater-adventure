@@ -60,8 +60,9 @@ public class GameManager : MonoBehaviour
 
     private void HandleBar()
     {
-        BoostAmountText.text = (int)MyPlayer.BoostAmount + "%";
-        BoostAmountBar.fillAmount = MapBoostAmount(MyPlayer.BoostAmount, 0, 100, 0, 1);
+        float percentageAmount = Mathf.FloorToInt((MyPlayer.BoostAmount / MyPlayer.MaxBoostAmount) * 100);
+        BoostAmountText.text = percentageAmount  + "%";
+        BoostAmountBar.fillAmount = MapBoostAmount(MyPlayer.BoostAmount, 0, MyPlayer.MaxBoostAmount, 0, 1);
     }
 
     private void OnTriggerEnter2D(Collider2D coll)
@@ -79,7 +80,7 @@ public class GameManager : MonoBehaviour
 
         int index = SceneManager.GetActiveScene().buildIndex - 1; // because of level selection Scene
 
-        if (index == save.Levels.Count - 1) 
+        if (index == save.Levels.Count - 1)
             save.Levels.Add(new Level());
 
         if (save.Levels[index].Coins < MyPlayer.CoinsAmount)

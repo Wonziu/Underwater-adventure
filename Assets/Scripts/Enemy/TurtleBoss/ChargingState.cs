@@ -13,8 +13,14 @@ public class ChargingState : IBossState
         {
             if (chargeCount == myBoss.MaxChargesCount)
             {
-                myBoss.NextState = new ShootingState();
-                myBoss.ChangeState(new MovingState());
+                int i = Random.Range(0, 2);
+                
+                if (i == 0)
+                {
+                    myBoss.NextState = new ShootingState();
+                    myBoss.ChangeState(new MovingState());
+                }
+                else myBoss.ChangeState(new SpawningEggsState());
             }
             else
             {
