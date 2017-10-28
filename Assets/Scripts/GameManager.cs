@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public Player MyPlayer;
     public Transform CoinsParent;
     public Transform SecretItemsParent;
+    public GameObject ProjectileParent;
 
     public bool BossFight;
     public Text AmmoText;
@@ -53,6 +54,14 @@ public class GameManager : MonoBehaviour
         AmmoText.text = ammo.ToString();
     }
 
+    public void DestroyProjectiles()
+    {
+        foreach (Transform child in ProjectileParent.transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
     private float MapBoostAmount(float value, float inMin, float inMax, float outMin, float outMax)
     {
         return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
@@ -60,7 +69,7 @@ public class GameManager : MonoBehaviour
 
     private void HandleBar()
     {
-        float percentageAmount = Mathf.FloorToInt((MyPlayer.BoostAmount / MyPlayer.MaxBoostAmount) * 100);
+        float percentageAmount = Mathf.FloorToInt(MyPlayer.BoostAmount / MyPlayer.MaxBoostAmount * 100);
         BoostAmountText.text = percentageAmount  + "%";
         BoostAmountBar.fillAmount = MapBoostAmount(MyPlayer.BoostAmount, 0, MyPlayer.MaxBoostAmount, 0, 1);
     }
@@ -84,7 +93,11 @@ public class GameManager : MonoBehaviour
             save.Levels.Add(new Level());
 
         if (save.Levels[index].Coins < MyPlayer.CoinsAmount)
+        {
+            save.Coins += MyPlayer.CoinsAmount - save.Levels[index].Coins;
             save.Levels[index].Coins = MyPlayer.CoinsAmount;
+        }
+
         if (save.Levels[index].SecretItems < MyPlayer.CoinsAmount)
             save.Levels[index].SecretItems = MyPlayer.SecretItemsAmount;
 

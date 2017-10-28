@@ -8,6 +8,7 @@ public class Boss : Character
     public int MaxHealthPoints;
 
     public BossFightManager MyBossFightManager;
+    public GameManager MyGameManager;
     public int HealthPoints;
 
     private void Start()
@@ -28,5 +29,6 @@ public class Boss : Character
     {
         gameObject.SetActive(false);
         MyBossFightManager.EndFight();
+        MyGameManager.DestroyProjectiles();
     }
 }

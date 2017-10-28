@@ -10,6 +10,7 @@ public class EnemySight : MonoBehaviour
     {
         if (other.tag == "Player")
             Enemy.Target = other.GetComponent<Player>();
+        
     }
 
     private void OnTriggerExit2D(Collider2D other)

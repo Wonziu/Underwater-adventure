@@ -10,9 +10,11 @@ public class Player : Character
     private float horizontal;
     private float vertical;
     private float baseSpeed;
+    private float bonusSpeed;
     private bool isBoosting;
-    public bool isFatigued;
 
+    public bool isFatigued;
+    public PlayerStats MyPlayerStats;
     public GameManager MyGameManager;
     public CameraController MyCameraController;
     public Weapon MyWeapon;
@@ -21,16 +23,25 @@ public class Player : Character
     public int SecretItemsAmount;
     public int AmmoAmount;
     public int CoinsAmount;
-    public int bonusSpeed;
-    public float BoostAmount = 100;
     public float MaxBoostAmount;
+
+    public float BoostAmount;
 
     private void Start()
     {
         CheckPoint = transform.position;
         MyGameManager.SetAmmoAmount(AmmoAmount);
-        baseSpeed = MovementSpeed;
-        MaxBoostAmount = BoostAmount;
+        GetUpgrades();
+        BoostAmount = MaxBoostAmount;
+    }
+
+    private void GetUpgrades()
+    {
+        SaveData save = FileManagment.ReadFile<SaveData>("save.dat");
+
+        bonusSpeed = MyPlayerStats.BonusSpeed + save.BonusSpeed;
+        baseSpeed = MyPlayerStats.MovementSpeed + save.MovementSpeed;
+        MaxBoostAmount = MyPlayerStats.MaxBoostAmount + save.MaxBoostAmount;
     }
 
     private void Update()
@@ -55,7 +66,7 @@ public class Player : Character
 
     private void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0) && AmmoAmount > 0)
+        if (Input.GetKey(KeyCode.Mouse0) && AmmoAmount > 0)
         {
             if (MyWeapon.Shoot())
             {
@@ -101,6 +112,7 @@ public class Player : Character
     {
         if (!MyGameManager.BossFight)
         {
+            MyGameManager.DestroyProjectiles();
             MyGameManager.StartCoroutine(MyGameManager.DeathAnimation(this, ResetPlayer));
             gameObject.SetActive(false);
         }

@@ -20,13 +20,17 @@ public class FirstBoss : Boss
     public Weapon MyWeapon;
     public List<Vector3> ShootingPositions;
     public IBossState NextState;
+
     public bool IsCharging;
     public bool IsSpawning;
+
     public int ChargeMovementSpeed;
     public int BulletsAmount;
     public int MaxChargesCount;
-    public float EnemySpawnDelay;
     public int SpawnCount;
+
+    public float EnemySpawnDelay;
+    public float ChargeDelay;
 
     private void Update()
     {
@@ -67,7 +71,7 @@ public class FirstBoss : Boss
 
         ChargeDirection = Vector3.zero;
 
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(ChargeDelay);
         IsCharging = false;
     }
 

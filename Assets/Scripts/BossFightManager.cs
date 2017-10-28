@@ -65,6 +65,7 @@ public class BossFightManager : MonoBehaviour
     public void EndFight()
     {
         EnterDoor.gameObject.SetActive(false);
+        BossUI.gameObject.SetActive(false);
         ExitDoor.gameObject.SetActive(false);
         MyCameraController.SetDefaultPosition();
     }

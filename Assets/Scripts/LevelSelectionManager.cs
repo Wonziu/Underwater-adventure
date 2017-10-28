@@ -9,9 +9,12 @@ public class LevelSelectionManager : MonoBehaviour
     private int levelIndex;
     public List<Level> Levels;
 
+    public GameObject SelectionUI;
+    public GameObject UpgradeUI;
     public GameObject LevelsParent;
     public Image LevelMenu;
 
+    public Text CoinsAmount;
     public Text LevelName;
     public Text LevelMaxCoins;
     public Text LevelMaxSecretItems;
@@ -22,6 +25,12 @@ public class LevelSelectionManager : MonoBehaviour
     {
         CheckSaveFile();
         LoadSave();
+    }
+
+    public void ChangeMainPanel()
+    {
+        SelectionUI.SetActive(!SelectionUI.activeSelf);
+        UpgradeUI.SetActive(!UpgradeUI.activeSelf);
     }
 
     public void OpenLevelMenu(int level)
@@ -53,6 +62,7 @@ public class LevelSelectionManager : MonoBehaviour
     public void LoadSave()
     {
         SaveData save = FileManagment.ReadFile<SaveData>("save.dat");
+        CoinsAmount.text = save.Coins.ToString();
 
         foreach (Transform transform1 in LevelsParent.transform)
         {

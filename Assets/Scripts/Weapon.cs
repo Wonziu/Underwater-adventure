@@ -7,6 +7,7 @@ public class Weapon : MonoBehaviour
     public float FireRate;
     public float ProjectileSpeed;
     public Transform Muzzle;
+    public Transform ProjectileParent;
 
     public Projectile MyProjectile;
 
@@ -30,6 +31,7 @@ public class Weapon : MonoBehaviour
 
             Projectile newProjectile = Instantiate(MyProjectile, Muzzle.position, Muzzle.rotation);
             newProjectile.SetSpeed(ProjectileSpeed);
+            newProjectile.transform.SetParent(ProjectileParent);
 
             return true;
         }
