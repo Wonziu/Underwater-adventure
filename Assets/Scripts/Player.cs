@@ -13,7 +13,7 @@ public class Player : Character
     private float bonusSpeed;
     private bool isBoosting;
 
-    public bool isFatigued;
+    public bool IsFatigued;
     public PlayerStats MyPlayerStats;
     public GameManager MyGameManager;
     public CameraController MyCameraController;
@@ -75,7 +75,7 @@ public class Player : Character
             }
         }
 
-        if (Input.GetKey(KeyCode.Mouse1) && !isFatigued && BoostAmount > 0)
+        if (Input.GetKey(KeyCode.Mouse1) && !IsFatigued && BoostAmount > 0)
             UseBoost();
         else
             LoadBoost();
@@ -93,9 +93,9 @@ public class Player : Character
         BoostAmount = Mathf.Clamp(BoostAmount, 0, MaxBoostAmount);
 
         if (Math.Abs(BoostAmount) < 0.25f)
-            isFatigued = true;
+            IsFatigued = true;
         else if (Math.Abs(BoostAmount) > MaxBoostAmount / 5)
-            isFatigued = false;
+            IsFatigued = false;
 
         isBoosting = false;
         BoostAmount += 0.1f;

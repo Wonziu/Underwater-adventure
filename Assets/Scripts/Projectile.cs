@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public LayerMask MyLayerMask;
-
     private float speed;
+
+    public LayerMask MyLayerMask;
 
     public void SetSpeed(float newSpeed)
     {

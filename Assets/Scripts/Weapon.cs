@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    public float FireRate;
-    public float ProjectileSpeed;
+    private bool canShoot = true;
+
+    private float FireRate;
+    private float ProjectileSpeed;
     public Transform Muzzle;
     public Transform ProjectileParent;
 
     public Projectile MyProjectile;
+    public WeaponStats MyWeaponStats;
 
-    private bool canShoot = true;
+    private void Start()
+    {
+        FireRate = MyWeaponStats.FireRate;
+        ProjectileSpeed = MyWeaponStats.ProjectileSpeed;
+    }
 
     public void Aim(Vector3 target)
     {

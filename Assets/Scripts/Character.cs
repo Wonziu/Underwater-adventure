@@ -7,6 +7,7 @@ public abstract class Character : MonoBehaviour
     public float MovementSpeed;
     public bool FacingLeft = true;
     public Rigidbody2D MyRigidbody2D;
+    [HideInInspector]
     public Player Target;
 
     public void Awake()

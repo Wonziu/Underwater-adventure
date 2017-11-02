@@ -9,12 +9,12 @@ public class GameManager : MonoBehaviour
 {
     private int MaxCoinsAmount;
 
-    public GameObject UIObject;
     public GUITexture Overlay;
     public Player MyPlayer;
     public Transform CoinsParent;
     public Transform SecretItemsParent;
     public GameObject ProjectileParent;
+    public GameObject UIObject;
 
     public bool BossFight;
     public Text AmmoText;

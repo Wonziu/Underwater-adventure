@@ -6,7 +6,7 @@ using UnityEngine;
 public class ShootingEnemy : Character
 {
     public LayerMask PlayerLayerMask;
-    
+
     public Weapon MyWeapon;
 
     private void Update()

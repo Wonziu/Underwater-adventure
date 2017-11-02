@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class ScrollingBackground : MonoBehaviour
 {
-    public bool Paralax;
-    public float BackgroundSize;
-    public float paralaxSpeed;
-
     private Transform cameraTransform;
     private Transform[] layers;
     private float viewZone = 10;
     private int leftIndex;
     private int rightIndex;
     private float lastCameraX;
+
+    public bool Paralax;
+    public float BackgroundSize;
+    public float paralaxSpeed; 
 
     private void Start()
     {
