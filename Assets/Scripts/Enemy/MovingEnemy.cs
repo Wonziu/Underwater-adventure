@@ -6,17 +6,25 @@ public class MovingEnemy : Character
     private int fromWaypointIndex;
     private float nextMoveTime;
     private Vector2 velocity;
+	private float easeAmount;
+	private float waitTime;
 
     public Vector2[] Waypoints;
     public bool Cyclic;
-    public float WaitTime;
-    [Range(0, 3)]
-    public float easeAmount;
+	public MovingEnemyStats MyMovingEnemyStats;
 
     private void Awake()
     {
         base.Awake();
+		SetStats();
     }
+
+	private void SetStats()
+	{
+		easeAmount = MyMovingEnemyStats.Ease;
+		waitTime = MyMovingEnemyStats.WaitTime;
+		MovementSpeed = MyMovingEnemyStats.MovementSpeed;
+	}
 
     private void FixedUpdate()
     {
@@ -68,7 +76,7 @@ public class MovingEnemy : Character
                     fromWaypointIndex = 0;
                     System.Array.Reverse(Waypoints);
                 }
-            nextMoveTime = Time.time + WaitTime;
+            nextMoveTime = Time.time + waitTime;
         }
 
         return newPos;
