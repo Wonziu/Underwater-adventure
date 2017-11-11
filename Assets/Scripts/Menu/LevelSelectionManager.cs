@@ -7,10 +7,8 @@ using UnityEngine.UI;
 public class LevelSelectionManager : MonoBehaviour
 {
     private int levelIndex;
-    public List<Level> Levels;
 
-    public GameObject SelectionUI;
-    public GameObject UpgradeUI;
+    public List<Level> Levels;
     public GameObject LevelsParent;
     public Image LevelMenu;
 
@@ -27,12 +25,6 @@ public class LevelSelectionManager : MonoBehaviour
         LoadSave();
     }
 
-    public void ChangeMainPanel()
-    {
-        SelectionUI.SetActive(!SelectionUI.activeSelf);
-        UpgradeUI.SetActive(!UpgradeUI.activeSelf);
-    }
-
     public void OpenLevelMenu(int level)
     {
         LevelMenu.gameObject.SetActive(true);
@@ -47,7 +39,7 @@ public class LevelSelectionManager : MonoBehaviour
 
     private void SetLevelMenuValues(int level)
     {
-        level = level - 1;
+        level--;
 
         LevelName.text = Levels[level].LevelName;
         LevelMaxCoins.text = Levels[level].Coins.ToString();
@@ -93,7 +85,7 @@ public class LevelSelectionManager : MonoBehaviour
                 Levels = new List<Level>()
             };
 
-            newSave.Levels.Add(new Level()); 
+            newSave.Levels.Add(new Level());
 
             FileManagment.WriteFile("save.dat", newSave);
         }

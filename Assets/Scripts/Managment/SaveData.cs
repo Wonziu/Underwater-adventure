@@ -7,7 +7,7 @@ public class SaveData
     public int Coins;
     public List<Level> Levels;
 
-    public int BonusSpeed;
+    public float BonusSpeed;
     public float MaxBoostAmount;
-    public int MovementSpeed;
+    public float MovementSpeed;
 }

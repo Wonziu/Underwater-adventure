@@ -12,9 +12,10 @@ public class GameManager : MonoBehaviour
     public GUITexture Overlay;
     public Player MyPlayer;
     public Transform CoinsParent;
-    public Transform SecretItemsParent;
+    public Transform SecretItemsParent; 
     public GameObject ProjectileParent;
     public GameObject UIObject;
+    public GameObject UIOptions;
 
     public bool BossFight;
     public Text AmmoText;
@@ -35,6 +36,23 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         HandleBar();
+    }
+
+    public void ToggleOptions()
+    {
+        UIOptions.SetActive(!UIOptions.activeSelf);
+        Time.timeScale = UIOptions.activeSelf ? 0 : 1;
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void LeaveToMenu()
+    {
+        SceneManager.LoadScene(0);
+        Time.timeScale = 1;
     }
 
     public void SetCoinsAmount(int coins)

@@ -12,6 +12,7 @@ public class Player : Character
     private float baseSpeed;
     private float bonusSpeed;
     private bool isBoosting;
+    private bool isPaused;
 
     public bool IsFatigued;
     public PlayerStats MyPlayerStats;
@@ -24,18 +25,17 @@ public class Player : Character
     public int AmmoAmount;
     public int CoinsAmount;
     public float MaxBoostAmount;
-
     public float BoostAmount;
 
     private void Start()
     {
         CheckPoint = transform.position;
         MyGameManager.SetAmmoAmount(AmmoAmount);
-        GetUpgrades();
+        LoadUpgrades();
         BoostAmount = MaxBoostAmount;
     }
 
-    private void GetUpgrades()
+    private void LoadUpgrades()
     {
         SaveData save = FileManagment.ReadFile<SaveData>("save.dat");
 
@@ -66,6 +66,15 @@ public class Player : Character
 
     private void HandleInput()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            MyGameManager.ToggleOptions();
+            isPaused = !isPaused;
+        }
+
+        if (isPaused)
+            return;
+
         if (Input.GetKey(KeyCode.Mouse0) && AmmoAmount > 0)
         {
             if (MyWeapon.Shoot())
