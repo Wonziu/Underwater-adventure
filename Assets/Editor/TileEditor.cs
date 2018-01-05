@@ -18,7 +18,7 @@ public class TileEditor : Editor
         TilesController myTilesController = parent.GetComponent<TilesController>();
         if (myTilesController == null) return;
 
-        if (e.type == EventType.keyDown)
+        if (e.type == EventType.KeyDown)
         {
             if (e.keyCode == KeyCode.Keypad1)
                 myTilesController.ChangeSprite(-1, mySpriteRenderer);

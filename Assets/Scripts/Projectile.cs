@@ -38,6 +38,6 @@ public class Projectile : MonoBehaviour
         else if (hit.collider.tag == "Player")
             hit.transform.GetComponent<Player>().TakeDamage();
 
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

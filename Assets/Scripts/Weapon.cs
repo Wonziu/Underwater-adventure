@@ -5,12 +5,12 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     private bool canShoot = true;
-
     private float FireRate;
     private float ProjectileSpeed;
+
+    public string ProjectileName;
     public Transform Muzzle;
     public Transform ProjectileParent;
-
     public Projectile MyProjectile;
     public WeaponStats MyWeaponStats;
 
@@ -25,9 +25,9 @@ public class Weapon : MonoBehaviour
         Vector3 diff = target - Muzzle.transform.position;
         diff.Normalize();
 
-        float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+        float rotZ = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
 
-        Muzzle.transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
+        Muzzle.transform.rotation = Quaternion.Euler(0f, 0f, rotZ - 90);
     }
 
     public bool Shoot()
@@ -35,14 +35,19 @@ public class Weapon : MonoBehaviour
         if (canShoot)
         {
             StartCoroutine(ShootingCooldown());
-
-            Projectile newProjectile = Instantiate(MyProjectile, Muzzle.position, Muzzle.rotation);
-            newProjectile.SetSpeed(ProjectileSpeed);
-            newProjectile.transform.SetParent(ProjectileParent);
-
+            CreateProjectile();       
             return true;
         }
         return false;
+    }
+
+    private void CreateProjectile()
+    {
+        Projectile newProjectile = PoolManager.Instance.GetPooledObject(ProjectileName);
+        newProjectile.SetSpeed(ProjectileSpeed);
+        newProjectile.transform.position = Muzzle.position;
+        newProjectile.transform.rotation = Muzzle.rotation;
+        newProjectile.gameObject.SetActive(true);
     }
 
     private IEnumerator ShootingCooldown()

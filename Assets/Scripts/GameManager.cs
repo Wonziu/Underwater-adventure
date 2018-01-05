@@ -75,9 +75,7 @@ public class GameManager : MonoBehaviour
     public void DestroyProjectiles()
     {
         foreach (Transform child in ProjectileParent.transform)
-        {
-            Destroy(child.gameObject);
-        }
+            child.gameObject.SetActive(false);
     }
 
     private float MapBoostAmount(float value, float inMin, float inMax, float outMin, float outMax)
@@ -88,6 +86,7 @@ public class GameManager : MonoBehaviour
     private void HandleBar()
     {
         float percentageAmount = Mathf.FloorToInt(MyPlayer.BoostAmount / MyPlayer.MaxBoostAmount * 100);
+        percentageAmount = Mathf.Clamp(percentageAmount,0 , 100);
         BoostAmountText.text = percentageAmount  + "%";
         BoostAmountBar.fillAmount = MapBoostAmount(MyPlayer.BoostAmount, 0, MyPlayer.MaxBoostAmount, 0, 1);
     }

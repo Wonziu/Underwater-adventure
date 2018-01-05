@@ -20,21 +20,17 @@ public class FirstBoss : Boss
     public Weapon MyWeapon;
     public List<Vector3> ShootingPositions;
     public IBossState NextState;
-
     public bool IsCharging;
     public bool IsSpawning;
-
     public int ChargeMovementSpeed;
     public int BulletsAmount;
     public int MaxChargesCount;
     public int SpawnCount;
-
     public float EnemySpawnDelay;
     public float ChargeDelay;
 
     private void Update()
-    {
-        
+    {        
         if (currentState != null)
             currentState.Execute();
     }
